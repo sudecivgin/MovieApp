@@ -12,10 +12,8 @@ const App = () => {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
-      {/* Onboarding tam ekran */}
       <Onboarding style={styles.onboarding} />
 
-      {/* Paginator ekranın en altında sabit */}
       <Paginator onNextPress={handleNext} style={styles.paginator} />
     </View>
   );
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
   },
   paginator: {
     position: 'absolute',
-    bottom: 30,          // ekranın altından 30px yukarıda
+    bottom: 30,        
     left: 0,
     right: 0,
     alignItems: 'center',

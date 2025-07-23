@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, useWindowDimensions, Image } from 'react-native
 export default function OnboardingItem({ item }) {
   const { width, height } = useWindowDimensions();
 
-  const isFullScreenImage = item.id === '3'; // sadece 3. sayfa için tam ekran
+  const isFullScreenImage = item.id === '3'; 
 
   return (
     <View style={[styles.container, { width, height }]}>
@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   textContainerWithBox: {
-    backgroundColor: '#212121', // opak siyah
+    backgroundColor: '#212121',
     padding: 40,
-    borderRadius: 30,           // yumuşak köşe
+    borderRadius: 30,         
     justifyContent: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.3,
