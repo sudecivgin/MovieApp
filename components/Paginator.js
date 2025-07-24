@@ -50,7 +50,7 @@ container: {
     marginRight: 12,
   },
   activeDot: {
-    backgroundColor: '#9486dcbc',
+    backgroundColor: '#12CDD9',
   },
   inactiveDot: {
     backgroundColor: '#a0a0a0', 
@@ -59,11 +59,11 @@ container: {
     width: 40,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#9486dcbc',
+    backgroundColor: '#12CDD9',
   },
 
   nextButton: {
-    backgroundColor: '#9486dcbc',
+    backgroundColor: '#12CDD9',
     borderRadius: 24,
     width: 48,
     height: 48,

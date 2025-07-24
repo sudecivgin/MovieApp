@@ -16,6 +16,12 @@ const slides = [
     image: require('../assets/image2.png'),
   },
 
+ {
+    id: '2.5',
+    title: 'Your taste, our recommendations!',
+    description: 'The more you use, the better we get to know you.',
+    image: require('../assets/image4.png'),
+  },
     {
     id: '3',
     title: 'Ready to dive into the movie world?',
@@ -37,8 +43,6 @@ export default function Onboarding() {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}/>
-
-    
     </View>
   );
 }
