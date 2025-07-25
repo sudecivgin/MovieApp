@@ -56,24 +56,17 @@ container: {
     backgroundColor: '#a0a0a0', 
   },
   bar: {
-    width: 40,
-    height: 10,
-    borderRadius: 5,
+    width: 200,
     backgroundColor: '#12CDD9',
   },
 
-  nextButton: {
-    backgroundColor: '#12CDD9',
-    borderRadius: 24,
-    width: 48,
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    shadowColor: '#000',
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 4,
-
+nextButton: {
+  backgroundColor: '#12CDD9',
+  borderRadius:24,
+  width: 48,
+  height: 48,
+  justifyContent: 'center',
+  alignItems: 'center',
+  overflow: 'hidden',
   },
 });
