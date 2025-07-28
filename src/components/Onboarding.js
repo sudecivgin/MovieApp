@@ -15,7 +15,7 @@ const slides = [
     id: '1',
     title: 'Hello! Welcome to the best movies.',
     description: 'Start exploring immediately.',
-    image: require('../../assets/image1.png')
+    image: require('../../assets/imageilk.png')
 
   },
   {
@@ -29,14 +29,14 @@ const slides = [
     id: '2.5',
     title: 'Your taste, our recommendations!',
     description: 'The more you use, the better we get to know you.',
-    image: require('../../assets/image4.png')
+    image: require('../../assets/imagesonn.png')
 
   },
   {
     id: '3',
     title: 'Ready to dive into the movie world?',
     description: 'Find, watch, and share your favorite films anytime, anywhere.',
-    image: require('../../assets/image5.png')
+    image: require('../../assets/image6.png')
 
   },
 ];
@@ -46,7 +46,7 @@ export default function Onboarding({ navigation }) {
   const flatListRef = useRef(null);
 
   const navigateToLogin = () => {
-    navigation.navigate('Login');
+    navigation.navigate('LoginScreen');
   };
 
   const nextSlide = () => {
@@ -75,21 +75,21 @@ export default function Onboarding({ navigation }) {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
-      />
+        viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}/>
 
       <View style={styles.bottomContainer}>
         <Paginator
           totalPages={slides.length}
           currentPage={currentIndex}
-          onNextPress={nextSlide}
-        />
+          onNextPress={nextSlide}/>
 
         {currentIndex !== slides.length - 1 && (
           <TouchableOpacity onPress={navigateToLogin}>
             <Text style={styles.skipText}>Skip</Text>
           </TouchableOpacity>
         )}
+
+        
       </View>
     </View>
   );
@@ -98,7 +98,7 @@ export default function Onboarding({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#212121',
+    backgroundColor:'#1e1e1eff',
   },
   bottomContainer: {
     position: 'absolute',
@@ -113,5 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#999',
     textAlign: 'center',
+    fontFamily:'serif,'
   },
+ 
 });

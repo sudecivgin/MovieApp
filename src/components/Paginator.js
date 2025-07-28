@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function Paginator({ totalPages = 3, currentPage = 0, onNextPress }) {
-  // currentPage: aktif sayfa indeksi (0'dan başlar)
 
   return (
     <View style={styles.container}>

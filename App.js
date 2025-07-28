@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AppNavigator from './src/navigation/AppNavigator';
 
+
 const App = () => {
   useEffect(() => {
     setTimeout(() => {
@@ -11,10 +12,15 @@ const App = () => {
   }, []);
 
   return (
+    
     <>
+    
       <StatusBar barStyle="dark-content" backgroundColor="#212121" />
+      
       <AppNavigator />
+      
     </>
+    
   );
 };
 
