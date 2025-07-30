@@ -84,11 +84,13 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
   },
+  
   backButton: {
     position: 'absolute',
     top: 50,
     left: 20,
   },
+
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
   },
+
   subtitle: {
     fontSize: 14,
     color: '#aaa',
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 40,
   },
+
   inputWrapper: {
     backgroundColor: '#161616ff',
     borderRadius: 16,

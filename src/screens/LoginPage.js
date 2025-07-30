@@ -8,30 +8,37 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
-
 import { useNavigation } from '@react-navigation/native';
+
+import { AuthContext } from '../context/AuthContext';
+import { useContext } from 'react';
 
 
 const LoginPage = () => {
-  const navigation = useNavigation();
+const navigation = useNavigation();
   
 
   const [email, setEmail] = useState('sude04@gmail.com');
-  const [password, setPassword] = useState('12345678');
+  const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = () => {
-    alert('Login pressed!');
-  };
+  const { login } = useContext(AuthContext);
+
+const handleLogin = () => {
+  if (email && password) {
+    login();
+  } else {
+    alert('Please enter both email and password!!!');
+  }
+};
 
   return (
     <SafeAreaView style={styles.container}>
       
-
         <View style={styles.header}>
           <Text style={styles.pageTitle}>Log In</Text>
         </View>
@@ -82,8 +89,7 @@ const LoginPage = () => {
             <Icon
               name={passwordVisible ? 'eye-off' : 'eye'}
               size={24}
-              color="#888"
-            />
+              color="#888"/>
           </TouchableOpacity>
         </View>
 

@@ -31,7 +31,7 @@ const VerificationScreen = () => {
  const handleSubmit = () => {
   const enteredCode = code.join('');
   if (enteredCode.length < 4) {
-    alert('Lütfen 4 haneli kodu girin.');
+    alert('Please enter the 4 digit code.');
     return;
   }
   navigation.navigate('CreatePassword'); 
