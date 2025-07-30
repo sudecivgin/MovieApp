@@ -6,36 +6,47 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-const SignUpScreen = () => {
-  const navigation = useNavigation(); 
+type RootStackParamList = {
+  LoginScreen: undefined;
+};
 
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
-  const [secureText, setSecureText] = useState(true);
+const SignUpScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const [fullName, setFullName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [secureText, setSecureText] = useState<boolean>(true);
 
   const handleSignUp = () => {
     if (!isChecked) {
-      alert('Lütfen şartları kabul edin.');
+      Alert.alert('Warning', 'Please accept the terms and conditions.');
       return;
     }
-    alert(`Hoş geldin, ${fullName}`);
+
+    Alert.alert('Welcome!', `Hoş geldin, ${fullName}`);
   };
 
   return (
-<ScrollView contentContainerStyle={styles.container}>
-  <View style={styles.header}>
-    <Text style={styles.pageTitle}>Sign Up</Text>
-  </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.pageTitle}>Sign Up</Text>
 
-<TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('LoginScreen')}>
-  <Icon name="arrow-left" size={24} color="white" />
-</TouchableOpacity>
+      </View>
+
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate('LoginScreen')}>
+
+        <Icon name="arrow-left" size={24} color="white" />
+
+      </TouchableOpacity>
 
       <Text style={styles.title}>Let’s get started</Text>
       <Text style={styles.subtitle}>The latest movies and series are here</Text>
@@ -45,8 +56,8 @@ const SignUpScreen = () => {
         placeholder="Full Name"
         placeholderTextColor="#888"
         value={fullName}
-        onChangeText={setFullName}
-      />
+        onChangeText={setFullName}/>
+
 
       <TextInput
         style={styles.input}
@@ -54,8 +65,8 @@ const SignUpScreen = () => {
         placeholderTextColor="#888"
         keyboardType="email-address"
         value={email}
-        onChangeText={setEmail}
-      />
+        onChangeText={setEmail} />
+
 
       <View style={styles.passwordContainer}>
         <TextInput
@@ -64,20 +75,25 @@ const SignUpScreen = () => {
           placeholderTextColor="#888"
           secureTextEntry={secureText}
           value={password}
-          onChangeText={setPassword}
-        />
+          onChangeText={setPassword}/>
+
+
         <TouchableOpacity onPress={() => setSecureText(!secureText)}>
           <Icon
             name={secureText ? 'eye-off-outline' : 'eye-outline'}
             size={22}
-            color="#888"
-          />
+            color="#888"/>
+
         </TouchableOpacity>
       </View>
 
       <View style={styles.checkboxContainer}>
-        <TouchableOpacity onPress={() => setIsChecked(!isChecked)} style={styles.checkbox}>
-          {isChecked ? <View style={styles.checkedBox} /> : null}
+        <TouchableOpacity
+          onPress={() => setIsChecked(!isChecked)}
+          style={styles.checkbox}>
+
+
+          {isChecked && <View style={styles.checkedBox} />}
         </TouchableOpacity>
         <Text style={styles.checkboxText}>
           I agree to the <Text style={styles.link}>Terms and Services</Text> and{' '}
@@ -88,13 +104,18 @@ const SignUpScreen = () => {
       <TouchableOpacity
         style={[styles.button, !isChecked && styles.buttonDisabled]}
         onPress={handleSignUp}
-        disabled={!isChecked}
-      >
+        disabled={!isChecked}>
+
+
+
         <Text style={styles.buttonText}>Sign Up</Text>
+
       </TouchableOpacity>
     </ScrollView>
   );
 };
+
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -103,32 +124,34 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
   },
- backButton: {
+  backButton: {
     position: 'absolute',
     top: 80,
     left: 20,
     zIndex: 10,
   },
 
-header: {
-  position: 'absolute',
-  top: 50,
-  left: 0,
-  right: 0,
-  alignItems: 'center', 
-  zIndex: 10,
-},
+  header: {
+    position: 'absolute',
+    top: 50,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 10,
 
+  },
 
-pageTitle: {
-  color: '#fff',
-  fontSize: 18,
-  fontWeight: 'bold',
-  fontFamily: 'serif',
-  marginTop:22,
-},
+  pageTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'serif',
+    marginTop: 22,
+
+  },
 
   title: {
+
     fontSize: 24,
     fontWeight: '700',
     color: '#00e6e6',
@@ -136,14 +159,18 @@ pageTitle: {
     marginBottom: 6,
     fontFamily: 'serif',
   },
+
   subtitle: {
     fontSize: 14,
     color: '#aaa',
     textAlign: 'center',
     marginBottom: 32,
     fontFamily: 'serif',
+
+
   },
   input: {
+
     backgroundColor: '#161616ff',
     padding: 16,
     borderRadius: 16,
@@ -151,6 +178,8 @@ pageTitle: {
     marginBottom: 16,
     fontFamily: 'serif',
   },
+
+
   passwordContainer: {
     backgroundColor: '#161616ff',
     borderRadius: 16,
@@ -160,17 +189,23 @@ pageTitle: {
     alignItems: 'center',
     marginBottom: 16,
   },
+
+
   passwordInput: {
     flex: 1,
     color: '#fff',
     paddingRight: 10,
     fontFamily: 'serif',
   },
+
+
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 24,
   },
+
+
   checkbox: {
     width: 22,
     height: 22,
@@ -180,6 +215,8 @@ pageTitle: {
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+
   checkboxText: {
     color: '#ccc',
     flex: 1,
@@ -187,6 +224,7 @@ pageTitle: {
     fontSize: 13,
     fontFamily: 'serif',
   },
+
 
   checkedBox: {
     width: 12,
@@ -198,15 +236,20 @@ pageTitle: {
     color: '#00e6e6',
     fontFamily: 'serif',
   },
+
+
   button: {
     backgroundColor: '#00e6e6',
     paddingVertical: 16,
     borderRadius: 30,
     alignItems: 'center',
   },
-  buttonsDisabled: {
+
+
+  buttonDisabled: {
     backgroundColor: '#444',
   },
+
   buttonText: {
     color: '#000',
     fontWeight: 'bold',
@@ -214,5 +257,3 @@ pageTitle: {
     fontFamily: 'serif',
   },
 });
-
-export default SignUpScreen;
