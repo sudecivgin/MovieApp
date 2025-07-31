@@ -37,6 +37,7 @@ const ResetPasswordScreen: React.FC = () => {
       </TouchableOpacity>
 
       <Text style={styles.title}>Reset Password</Text>
+
       <Text style={styles.subtitle}>Recover your account password</Text>
 
 
@@ -49,6 +50,7 @@ const ResetPasswordScreen: React.FC = () => {
         value={email}
 
         onChangeText={setEmail}
+
         keyboardType="email-address"/>
 
       <TouchableOpacity style={styles.button} onPress={handleReset}>
@@ -63,6 +65,7 @@ export default ResetPasswordScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
     backgroundColor: '#1e1e1eff',
     padding: 24,
     paddingTop: 200,

@@ -13,6 +13,7 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const login = () => setIsAuthenticated(true);
@@ -21,6 +22,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
+      
     </AuthContext.Provider>
   );
 };

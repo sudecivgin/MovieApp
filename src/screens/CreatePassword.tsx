@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import { RootStackParamList } from '../navigation/AppNavigator'; 
+import { RootStackParamList } from '../navigation/types';
 import { Alert } from 'react-native';
 
 

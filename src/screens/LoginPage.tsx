@@ -16,7 +16,6 @@ import {
 
 import { AuthContext } from '../context/AuthContext';
 
-// Eğer navigation tipi ayrı bir yerde tanımlı değilse:
 type RootStackParamList = {
   LoginScreen: undefined;
   LoginPage: undefined;
@@ -50,80 +49,75 @@ const LoginPage: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.pageTitle}>Log In</Text>
 
-      </View>
+  </View>
 
-      <TouchableOpacity
+   <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('LoginScreen')}>
+       onPress={() => navigation.navigate('LoginScreen')}>
         <Icon name="arrow-left" size={24} color="white" />
       </TouchableOpacity>
 
-      <View style={styles.welcomeContainer}>
+  <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeTitle}>Welcome!</Text>
         <Text style={styles.welcomeSubtitle}>
           Welcome back! Please enter your details.
-        </Text>
-      </View>
-
-
+     </Text>
+  </View>
       <View style={styles.form}>
-        <Text style={styles.label}>Email Address</Text>
+      <Text style={styles.label}>Email Address</Text>
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={setEmail}
-          keyboardType="email-address"
+        keyboardType="email-address"
           autoCapitalize="none"
           placeholder="Email Address"
-          placeholderTextColor="#555"  />
+         placeholderTextColor="#555"  />
 
         <Text style={[styles.label, { marginTop: 20 }]}>Password</Text>
-
-        <View style={styles.passwordContainer}>
+      <View style={styles.passwordContainer}>
           <TextInput
             style={[
-              styles.input,
+            styles.input,
               {
-                flex: 1,
+              flex: 1,
                 backgroundColor: 'transparent',
                 paddingVertical: 0,
                 paddingHorizontal: 0,
 
                 borderRadius: 0,
-              },
+            },
             ]}
             value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!passwordVisible}
-            placeholder="Password"
+         onChangeText={setPassword}
+          secureTextEntry={!passwordVisible}
+        placeholder="Password"
             placeholderTextColor="#555" />
 
-          <TouchableOpacity
+    <TouchableOpacity
             style={styles.eyeIcon}
             onPress={togglePasswordVisibility}>
-            <Icon
+      <Icon
               name={passwordVisible ? 'eye-off' : 'eye'}
               size={24}
               color="#888"/>
-          </TouchableOpacity>
+      </TouchableOpacity>
 
-        </View>
-
+    </View>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.createAccountText}>Create an account</Text>
+        <Text style={styles.createAccountText}>Create an account</Text>
 
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.forgotContainer}
+       </TouchableOpacity>
+  <TouchableOpacity
+       style={styles.forgotContainer}
           onPress={() => navigation.navigate('ResetPassword')}>
           <Text style={styles.forgotText}>Forgot Password?</Text>
-        </TouchableOpacity>
+    </TouchableOpacity>
 
-        <TouchableOpacity
+       <TouchableOpacity
           style={styles.loginButton}
 
-          onPress={handleLogin}>
+       onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -134,7 +128,7 @@ const LoginPage: React.FC = () => {
 
 export default LoginPage;
 
-// -------- STİLLER ----
+// --- STİLLER ----
 
 const styles = StyleSheet.create({
 
