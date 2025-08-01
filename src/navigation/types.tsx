@@ -9,6 +9,6 @@ export type RootStackParamList = {
 
   Home: undefined;
   Category: { category: 'Comedy' | 'Animation' | 'Documentary' | 'All' };
-
+  MainApp: undefined; 
   Popular: undefined; 
 };

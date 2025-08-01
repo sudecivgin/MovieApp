@@ -6,12 +6,12 @@ import Onboarding from '../components/Onboarding';
 import LoginScreen from '../screens/LoginScreen';
 
 import LoginPage from '../screens/LoginPage';
+import BottomTabs from './BottomTabs';
 
 import SignUpScreen from '../screens/SignUpScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import VerificationScreen from '../screens/VerificationScreen';
 import CreatePassword from '../screens/CreatePassword';
-import HomeScreen from '../screens/HomeScreen';
 import CategoryScreen from '../screens/CategoryScreen'; 
 
 import PopularScreen from '../screens/PopularScreen'; 
@@ -36,15 +36,16 @@ const AuthStack = () => (
 
     <Stack.Screen name="Verification" component={VerificationScreen} />
     <Stack.Screen name="CreatePassword" component={CreatePassword} />
+    
   </Stack.Navigator>
 );
 
 const AppStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: true }}>
+  <Stack.Navigator>
     <Stack.Screen
-      name="Home"
-      component={HomeScreen}
-      options={{ headerShown: false }} />
+      name="MainApp"
+      component={BottomTabs}
+      options={{ headerShown: false }}/>
 
 
     <Stack.Screen
@@ -55,18 +56,18 @@ const AppStack = () => (
         headerStyle: { backgroundColor: '#181818' },
         headerTintColor: 'white',
         headerTitleStyle: { fontFamily: 'serif' },
-      })}  />
+      })} />
 
     <Stack.Screen
       name="Popular"
-      component={PopularScreen} 
+      component={PopularScreen}
       options={{
         title: 'Popular Movies',
         headerStyle: { backgroundColor: '#181818' },
         headerTintColor: 'white',
         headerTitleStyle: { fontFamily: 'serif' },
-      }}/>
-      
+      }} />
+
   </Stack.Navigator>
 );
 
@@ -78,6 +79,7 @@ const AppNavigator: React.FC = () => {
   console.log('[NAVIGATION] Authenticated:', isAuthenticated);
 
   return (
+    
     <NavigationContainer>
       {isAuthenticated ? <AppStack /> : <AuthStack />}
     </NavigationContainer>

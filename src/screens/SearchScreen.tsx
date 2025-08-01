@@ -11,6 +11,7 @@ import {
   ImageSourcePropType,
   KeyboardAvoidingView,
   Platform,
+
 } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -29,11 +30,11 @@ const mid: ImageSourcePropType = require('../../assets/mid.jpg');
 const batman: ImageSourcePropType = require('../../assets/batman.jpg');
 const wakanda: ImageSourcePropType = require('../../assets/home1.jpg');
 
+
 const thor: ImageSourcePropType = require('../../assets/thor.png');
-
 const fountain: ImageSourcePropType = require('../../assets/fountain.jpg');
-
 const lifeofpi: ImageSourcePropType = require('../../assets/lifeofpi.jpg');
+
 const gump: ImageSourcePropType = require('../../assets/gump.jpg');
 
 const categories: RootStackParamList['Category']['category'][] = [
@@ -46,24 +47,26 @@ const categories: RootStackParamList['Category']['category'][] = [
 const popularMovies = [
   { id: '1', title: 'Thor', rating: 4.5, image: thor },
   { id: '2', title: 'The Fountain', rating: 4.5, image: fountain },
-
   { id: '3', title: 'Forrest Gump', rating: 4.5, image: gump },
   { id: '4', title: 'Midsommar', rating: 4.5, image: mid },
   { id: '5', title: 'Life of PI', rating: 4.5, image: lifeofpi },
 ];
 
-const HomeScreen: React.FC = () => {
+const SearchScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const renderHeader = () => (
     <View>
       <View style={styles.header}>
-        <Image source={avatar} style={styles.avatar} />
+      <Image source={avatar} style={styles.avatar} />
         <View style={styles.textContainer}>
-          <Text style={styles.helloText}>Hello!</Text>
+      <Text style={styles.helloText}>Hello!</Text>
           <Text style={styles.subtitle}>Let’s stream your favorite movie</Text>
-        </View>
+    </View>
       </View>
+
+
+
 
       <View style={styles.searchContainer}>
         <TextInput
@@ -72,19 +75,8 @@ const HomeScreen: React.FC = () => {
           placeholderTextColor="#aaa"
           style={styles.searchInput}/>
 
+
       </View>
-
-      <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.carousel}>
-        {[avatar1, batman, mid, wakanda].map((img, index) => (
-
-          <View key={index} style={styles.carouselItem}>
-            <Image source={img} style={styles.featuredImage} />
-            <Text style={styles.featuredTitle}>Movie </Text>
-            <Text style={styles.featuredDate}>On March 2, 2022</Text>
-        </View>
-        ))}
-  </ScrollView>
-
   <Text style={styles.category}>CATEGORY</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
         {categories.map((cat, index) => (
@@ -95,9 +87,21 @@ const HomeScreen: React.FC = () => {
             onPress={() => navigation.navigate('Category', { category: cat })}>
 
             <Text style={styles.categoryText}>{cat}</Text>
-      
-         </TouchableOpacity>
+          </TouchableOpacity>
             ))}
+    <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.carousel}>
+        {[avatar1, batman, mid, wakanda].map((img, index) => (
+
+          <View key={index} style={styles.carouselItem}>
+            <Image source={img} style={styles.featuredImage} />
+      
+          <Text style={styles.featuredTitle}>Movie </Text>
+            <Text style={styles.featuredDate}>On March 2, 2022</Text>
+          </View>
+        ))}
+      </ScrollView>
+
+    
       </ScrollView>
 
       <View style={styles.sectionHeader}>
@@ -114,7 +118,6 @@ return (
 
   <KeyboardAvoidingView
     style={{ flex: 1, backgroundColor: '#000' }}
-    
     behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
 
     <ScrollView
@@ -153,7 +156,7 @@ return (
 
 };
 
-export default HomeScreen;
+export default SearchScreen;
 
 const styles = StyleSheet.create({
 
@@ -207,6 +210,8 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
     marginTop: -8,
   },
+
+
   carousel: {
     marginTop: 30,
     marginBottom: 20,
@@ -246,6 +251,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     
   },
+
   categoryContainer: {
     marginBottom: 20,
   },
@@ -310,5 +316,6 @@ const styles = StyleSheet.create({
   movieRating: {
     color: '#f5c518',
     fontSize: 12,
+    
   },
 });

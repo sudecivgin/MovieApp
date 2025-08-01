@@ -16,6 +16,7 @@ import { Alert } from 'react-native';
 
 
 const CreatePassword: React.FC = () => {
+
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [secureNew, setSecureNew] = useState<boolean>(true);
@@ -36,22 +37,22 @@ const handleReset = () => {
 };
 
   return (
-    <SafeAreaView style={styles.container}>
+  <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
 
         <Icon name="arrow-left" size={24} color="#fff" />
       </TouchableOpacity>
 
-      <Text style={styles.title}>Create New Password</Text>
-      <Text style={styles.subtitle}>Enter your new password</Text>
+  <Text style={styles.title}>Create New Password</Text>
+  <Text style={styles.subtitle}>Enter your new password</Text>
 
       <View style={styles.inputWrapper}>
         <TextInput
        
-      style={styles.input}
+    style={styles.input}
         placeholder="New Password"
           placeholderTextColor="#aaa"
-        secureTextEntry={secureNew}
+      secureTextEntry={secureNew}
         value={newPassword}
           onChangeText={setNewPassword} />
 
