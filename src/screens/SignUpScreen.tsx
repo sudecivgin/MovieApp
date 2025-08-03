@@ -54,6 +54,7 @@ const SignUpScreen: React.FC = () => {
       <TextInput
         style={styles.input}
         placeholder="Full Name"
+        
         placeholderTextColor="#888"
         value={fullName}
         onChangeText={setFullName}/>
@@ -71,6 +72,7 @@ const SignUpScreen: React.FC = () => {
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.passwordInput}
+
           placeholder="Password"
           placeholderTextColor="#888"
           secureTextEntry={secureText}
@@ -90,6 +92,7 @@ const SignUpScreen: React.FC = () => {
       <View style={styles.checkboxContainer}>
         <TouchableOpacity
           onPress={() => setIsChecked(!isChecked)}
+
           style={styles.checkbox}>
 
 
@@ -102,6 +105,7 @@ const SignUpScreen: React.FC = () => {
       </View>
 
       <TouchableOpacity
+
         style={[styles.button, !isChecked && styles.buttonDisabled]}
         onPress={handleSignUp}
         disabled={!isChecked}>
@@ -118,6 +122,7 @@ const SignUpScreen: React.FC = () => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
+
   container: {
     flexGrow: 1,
     backgroundColor: '#212121',

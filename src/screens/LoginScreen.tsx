@@ -32,8 +32,9 @@ const LoginScreen: React.FC = () => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('SignUp')}
-      >
+        onPress={() => navigation.navigate('SignUp')}>
+
+
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -41,8 +42,8 @@ const LoginScreen: React.FC = () => {
         I already have an account?{' '}
         <Text
           style={styles.loginText}
-          onPress={() => navigation.navigate('LoginPage')}
-        >
+          onPress={() => navigation.navigate('LoginPage')}>
+            
           Login
         </Text>
       </Text>

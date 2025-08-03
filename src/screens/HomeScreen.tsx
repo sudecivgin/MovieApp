@@ -193,11 +193,11 @@ const styles = StyleSheet.create({
   },
 
   searchContainer: {
-    marginTop: 60,
+    marginTop: 40,
     backgroundColor: '#2b2b2bff',
     borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     marginBottom: -3,
   },
   searchInput: {
@@ -245,9 +245,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     
+    
   },
   categoryContainer: {
     marginBottom: 20,
+    
   },
 
   categoryButton: {
@@ -258,6 +260,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
+         width: 120,
+
   },
 
   categoryText: {

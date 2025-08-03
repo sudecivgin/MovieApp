@@ -7,6 +7,8 @@ export type RootStackParamList = {
   Verification: undefined;
   CreatePassword: undefined;
 
+    EditProfile: undefined;
+
   Home: undefined;
   Category: { category: 'Comedy' | 'Animation' | 'Documentary' | 'All' };
   MainApp: undefined; 

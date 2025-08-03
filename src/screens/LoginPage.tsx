@@ -88,6 +88,8 @@ const LoginPage: React.FC = () => {
                 borderRadius: 0,
             },
             ]}
+
+            
             value={password}
          onChangeText={setPassword}
           secureTextEntry={!passwordVisible}

@@ -18,6 +18,7 @@ import PopularScreen from '../screens/PopularScreen';
 
 import { AuthContext } from '../context/AuthContext';
 import { RootStackParamList } from './types';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -36,7 +37,8 @@ const AuthStack = () => (
 
     <Stack.Screen name="Verification" component={VerificationScreen} />
     <Stack.Screen name="CreatePassword" component={CreatePassword} />
-    
+
+
   </Stack.Navigator>
 );
 
@@ -68,6 +70,20 @@ const AppStack = () => (
         headerTitleStyle: { fontFamily: 'serif' },
       }} />
 
+<Stack.Screen
+  name="EditProfile"
+  component={EditProfileScreen}
+  options={{
+    
+    title: 'Edit Profile',
+    headerStyle: {
+      backgroundColor: '#181818',
+    },
+    headerTintColor: '#fff',       
+    headerTitleStyle: {
+      fontFamily: 'serif',     },
+  }}
+/>
   </Stack.Navigator>
 );
 
