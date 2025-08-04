@@ -15,6 +15,7 @@ const BottomTabs: React.FC = () => {
         <Tab.Navigator
       initialRouteName="Home" 
       screenOptions={({ route }) => ({
+        
         headerShown: false,
         tabBarStyle: {
           backgroundColor: '#1e1e1e',

@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// Eğer bir stack parametre listesi tanımlamadıysan örnek:
 type RootStackParamList = {
   LoginPage: undefined;
   SignUp: undefined;
@@ -50,7 +50,7 @@ const LoginScreen: React.FC = () => {
 
       <Text style={styles.login}>Or Sign up with</Text>
 
-      <View style={styles.socialIconContainer}>
+    <View style={styles.socialIconContainer}>
         <TouchableOpacity
           style={[styles.socialIconButton, { backgroundColor: '#4f4d4d97' }]}
           onPress={() => console.log('Google login')}>

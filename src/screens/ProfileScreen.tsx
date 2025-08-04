@@ -14,17 +14,33 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
+import { AuthContext } from '../context/AuthContext';
+import { useContext } from 'react';
+
+
 const ProfileScreen = () => {
   
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  
-  const handleLogout = () => {
-    Alert.alert('Log Out', 'Are you sure you want to log out?', [
-      { text: 'Cancel' },
-      { text: 'Log Out', onPress: () => console.log('User logged out') },
-    ]);
-  };
+  const { logout } = useContext(AuthContext)!;
+
+ const handleLogout = () => {
+  Alert.alert('Log Out', 'Are you sure you want to log out?', [
+    { text: 'Cancel', style: 'cancel' },
+    {
+      text: 'Log Out',
+      style: 'destructive',
+      onPress: async () => {
+        try {
+          await logout();
+        } catch (error: any) {
+          Alert.alert('Error', error.message);
+        }
+      },
+    },
+  ]);
+};
+
 
   return (
     <ScrollView style={styles.container}>

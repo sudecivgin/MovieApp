@@ -13,7 +13,6 @@ import {
   useNavigation,
   NavigationProp,
 } from '@react-navigation/native';
-
 import { AuthContext } from '../context/AuthContext';
 
 type RootStackParamList = {
@@ -26,9 +25,9 @@ type RootStackParamList = {
 const LoginPage: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const [email, setEmail] = useState<string>('sude04@gmail.com');
-  const [password, setPassword] = useState<string>('');
-  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const { login } = useContext(AuthContext)!;
 
@@ -36,99 +35,110 @@ const LoginPage: React.FC = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleLogin = () => {
-    if (email && password) {
-      login();
-    } else {
-      Alert.alert('Validation Error', 'Please enter both email and password!');
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter both email and password');
+      return;
+    }
+
+    try {
+      await login(email, password);
+
+
+    } catch (error: any) {
+      console.error('Login failed:', error);
+      Alert.alert('Login Error', error.message);
     }
   };
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.pageTitle}>Log In</Text>
+      </View>
 
-  </View>
-
-   <TouchableOpacity
+      <TouchableOpacity
         style={styles.backButton}
-       onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={() => navigation.navigate('LoginScreen')}>
         <Icon name="arrow-left" size={24} color="white" />
       </TouchableOpacity>
 
-  <View style={styles.welcomeContainer}>
+      <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeTitle}>Welcome!</Text>
         <Text style={styles.welcomeSubtitle}>
           Welcome back! Please enter your details.
-     </Text>
-  </View>
+        </Text>
+      </View>
+
       <View style={styles.form}>
-      <Text style={styles.label}>Email Address</Text>
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-        keyboardType="email-address"
-          autoCapitalize="none"
-          placeholder="Email Address"
-         placeholderTextColor="#555"  />
+        <Text style={styles.label}>Email Address</Text>
+    <TextInput
+  style={styles.input}
+  placeholder="Email Address"
+  placeholderTextColor="#888"
+  value={email}
+  onChangeText={setEmail}
+  keyboardType="email-address"
+  autoCapitalize="none"
+  autoCorrect={false} 
+/>
+
+        
 
         <Text style={[styles.label, { marginTop: 20 }]}>Password</Text>
-      <View style={styles.passwordContainer}>
+        <View style={styles.passwordContainer}>
           <TextInput
             style={[
-            styles.input,
+              styles.input,
               {
-              flex: 1,
+                flex: 1,
                 backgroundColor: 'transparent',
                 paddingVertical: 0,
                 paddingHorizontal: 0,
-
                 borderRadius: 0,
-            },
+              },
             ]}
-
-            
             value={password}
-         onChangeText={setPassword}
-          secureTextEntry={!passwordVisible}
-        placeholder="Password"
-            placeholderTextColor="#555" />
+            onChangeText={setPassword}
+            secureTextEntry={!passwordVisible}
+            placeholder="Password"
+            placeholderTextColor="#555"
+          />
 
-    <TouchableOpacity
+          <TouchableOpacity
             style={styles.eyeIcon}
             onPress={togglePasswordVisibility}>
-      <Icon
+            <Icon
               name={passwordVisible ? 'eye-off' : 'eye'}
               size={24}
-              color="#888"/>
-      </TouchableOpacity>
+              color="#888"
+            />
+          </TouchableOpacity>
+        </View>
 
-    </View>
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.createAccountText}>Create an account</Text>
+          <Text style={styles.createAccountText}>Create an account</Text>
+        </TouchableOpacity>
 
-       </TouchableOpacity>
-  <TouchableOpacity
-       style={styles.forgotContainer}
+        <TouchableOpacity
+          style={styles.forgotContainer}
           onPress={() => navigation.navigate('ResetPassword')}>
           <Text style={styles.forgotText}>Forgot Password?</Text>
-    </TouchableOpacity>
+        </TouchableOpacity>
 
-       <TouchableOpacity
+        <TouchableOpacity
           style={styles.loginButton}
-
-       onPress={handleLogin}>
+          onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
-
 };
 
 export default LoginPage;
+
 
 // --- STİLLER ----
 
