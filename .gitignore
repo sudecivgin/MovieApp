@@ -73,3 +73,12 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+
+# Firebase config dosyaları
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+
+# Ortam değişkenleri dosyası
+.env
+.env.*
