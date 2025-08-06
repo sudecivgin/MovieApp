@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -13,40 +13,35 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
-
 import { AuthContext } from '../context/AuthContext';
-import { useContext } from 'react';
-
 
 const ProfileScreen = () => {
-  
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
   const { logout } = useContext(AuthContext)!;
 
- const handleLogout = () => {
-  Alert.alert('Log Out', 'Are you sure you want to log out?', [
-    { text: 'Cancel', style: 'cancel' },
-    {
-      text: 'Log Out',
-      style: 'destructive',
-      onPress: async () => {
-        try {
-          await logout();
-        } catch (error: any) {
-          Alert.alert('Error', error.message);
-        }
+  const handleLogout = () => {
+    Alert.alert('Log Out', 'Are you sure you want to log out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Log Out',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await logout();
+          } catch (error: any) {
+            Alert.alert('Error', error.message);
+          }
+        },
       },
-    },
-  ]);
-};
-
+    ]);
+  };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
         <Image source={require('../../assets/AvatarHome.png')} style={styles.avatar} />
         <View style={styles.userInfo}>
+
           <Text style={styles.name}>Sude</Text>
           <Text style={styles.email}>Sude04@gmail.com</Text>
         </View>
@@ -54,16 +49,11 @@ const ProfileScreen = () => {
           <Icon name="account-edit-outline" size={20} color="#00bcd4" />
         </TouchableOpacity>
       </View>
-      
 
-      {/* Premium KUTUSU  */}
-
-
+      {/* Premium Kısmı*/}
       <View style={styles.premiumBox}>
         <Icon name="crown" size={24} color="#fff" />
-
         <View style={{ marginLeft: 10 }}>
-
           <Text style={styles.premiumText}>Premium Member</Text>
           <Text style={styles.premiumSubText}>
             New movies are coming for you, Download Now!
@@ -71,30 +61,35 @@ const ProfileScreen = () => {
         </View>
       </View>
 
-      {/* Account Sekmesi */}
-
-
+      {/* Account kısmı*/}
       <Text style={styles.sectionHeader}>Account</Text>
-      <OptionItem icon="account" label="Member" />
-      <OptionItem icon="lock-outline" label="Change Password" />
 
-      {/* General Sekmesi */}
+<OptionItem
+  icon="lock-outline"
+  label="Change Password"
+  onPress={() => navigation.navigate('ResetPassword')}
+/>
 
+      {/* General  */}
       <Text style={styles.sectionHeader}>General</Text>
       <OptionItem icon="bell-outline" label="Notification" />
-      <OptionItem icon="earth" label="Language" />
-      <OptionItem icon="flag" label="Country" />
-      <OptionItem icon="delete-outline" label="Clear Cache" />
 
-      {/* More kısmı*/}
-
+      {/* More  */}
       <Text style={styles.sectionHeader}>More</Text>
-      <OptionItem icon="file-document-outline" label="Legal and Policies" />
-      <OptionItem icon="message-question-outline" label="Help & Feedback" />
+      <OptionItem
+        icon="file-document-outline"
+        label="Legal and Policies"
+        onPress={() => navigation.navigate('Policies')}/>
+
+<OptionItem
+  icon="message-question-outline"
+  label="Help & Feedback"
+  onPress={() => navigation.navigate('Help')}
+/>
+
       <OptionItem icon="information-outline" label="About Us" />
 
       {/* Logout */}
-
       <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
@@ -102,15 +97,22 @@ const ProfileScreen = () => {
   );
 };
 
-const OptionItem = ({ icon, label }: { icon: string; label: string }) => (
-  <TouchableOpacity style={styles.optionRow}>
-    
+const OptionItem = ({
+  icon,
+  label,
+  onPress,
+}: {
+
+  icon: string;
+  label: string;
+  onPress?: () => void;
+}) => (
+
+  <TouchableOpacity style={styles.optionRow} onPress={onPress}>
     <Icon name={icon} size={22} color="#fff" style={{ width: 30 }} />
     <Text style={styles.optionText}>{label}</Text>
-
     <Icon name="chevron-right" size={18} color="#888" style={{ marginLeft: 'auto' }} />
   </TouchableOpacity>
-
 );
 
 
@@ -122,17 +124,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#181818',
     paddingHorizontal: 20,
   },
-
-
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 70,
     marginBottom: 20,
-    
-    
   },
-
   avatar: {
     width: 56,
     height: 56,
@@ -140,27 +137,23 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
 
-
   userInfo: {
     flex: 1,
-    
   },
 
   name: {
+
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
-        fontFamily:'serif',
-
+    fontFamily: 'serif',
   },
-  
+
   email: {
     color: '#ccc',
     fontSize: 14,
-        fontFamily:'serif',
-
+    fontFamily: 'serif',
   },
-
 
   premiumBox: {
     backgroundColor: '#9f5000ff',
@@ -169,55 +162,45 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
     marginBottom: 30,
-    marginTop:30,
-
+    marginTop: 30,
   },
+
+
 
   premiumText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 15,
-        fontFamily:'serif',
-
+    fontFamily: 'serif',
   },
-
 
   premiumSubText: {
     color: '#fff',
     fontSize: 12,
     marginTop: 4,
-    fontFamily:'serif',
+      fontFamily: 'serif',
   },
-
-
   sectionHeader: {
     color: '#9e9b9bff',
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '900',
     marginTop: 20,
     marginBottom: 8,
-        fontFamily:'serif',
-
+    fontFamily: 'serif',
   },
-
   optionRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 14,
     borderBottomColor: '#2b2b2b',
-    borderBottomWidth: 1,
-    
+       borderBottomWidth: 1,
   },
-
   optionText: {
     color: '#fff',
     fontSize: 15,
     marginLeft: 8,
-            fontFamily:'serif',
-
-    
+    fontFamily: 'serif',
   },
-  
   logoutButton: {
     borderWidth: 1,
     borderColor: '#00bcd4',
@@ -226,13 +209,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 30,
   },
-
-
+  
   logoutText: {
     color: '#00bcd4',
     fontWeight: 'bold',
     fontSize: 16,
-            fontFamily:'serif',
-
+          fontFamily: 'serif',
   },
 });

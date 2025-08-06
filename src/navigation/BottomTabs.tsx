@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -22,6 +23,7 @@ const BottomTabs: React.FC = () => {
           borderTopWidth: 0,
           height: 60,
         },
+
         tabBarActiveTintColor: '#00bcd4',
         tabBarInactiveTintColor: '#aaa',
         tabBarIcon: ({ color, focused }) => {
@@ -42,7 +44,7 @@ const BottomTabs: React.FC = () => {
               iconName = 'person-outline';
               break;
           }
-
+          
           return (
             <View
               style={{
@@ -62,6 +64,7 @@ const BottomTabs: React.FC = () => {
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Downloads" component={DownloadsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      
     </Tab.Navigator>
     
   );
