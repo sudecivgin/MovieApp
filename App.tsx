@@ -7,6 +7,7 @@ import AuthProvider from './src/context/AuthContext';
 
 
 
+
 const App: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
@@ -18,7 +19,9 @@ const App: React.FC = () => {
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#212121" />
       <AuthProvider>
+        
         <AppNavigator />
+
       </AuthProvider>
       
     </>

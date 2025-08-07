@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 
 const Policies = () => {
+  
   const navigation = useNavigation();
 
   return (
@@ -23,8 +24,7 @@ const Policies = () => {
         
         <Text style={styles.headerTitle}>Privacy Policy</Text>
       </View>
-
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+  <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.sectionTitle}>Terms</Text>
         <Text style={styles.paragraph}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -40,7 +40,7 @@ const Policies = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
            Eget ornare quam vel facilisis feugiat amet sagittis arcu, tortor. Sapien, consequat ultrices morbi orci semper sit nulla. Leo auctor ut etiam est, amet aliquet ut vivamus. Odio vulputate est id tincidunt fames.
         </Text>
-        <Text style={styles.paragraph}>
+    <Text style={styles.paragraph}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
            Eget ornare quam vel facilisis feugiat amet sagittis arcu, tortor.
             Sapien, consequat ultrices morbi orci semper sit nulla. Leo auctor ut etiam est, amet aliquet ut vivamus. Odio vulputate est id tincidunt fames.

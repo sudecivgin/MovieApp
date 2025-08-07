@@ -1,4 +1,5 @@
-import React from 'react';
+// SearchScreen.tsx (TMDb verileriyle dinamik)
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,159 +8,183 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
-  ImageSourcePropType,
   KeyboardAvoidingView,
   Platform,
-
+  ActivityIndicator,
 } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
-
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
+import { TMDB_API_KEY } from '@env';
 
+const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
-const mid: ImageSourcePropType = require('../../assets/mid.jpg');
-const thor: ImageSourcePropType = require('../../assets/thor.png');
-const fountain: ImageSourcePropType = require('../../assets/fountain.jpg');
-const lifeofpi: ImageSourcePropType = require('../../assets/lifeofpi.jpg');
-
-const gump: ImageSourcePropType = require('../../assets/gump.jpg');
-
-const categories: RootStackParamList['Category']['category'][] = [
-  'All',
-  'Comedy',
-  'Animation',
-  'Documentary',
-];
-
-
-const todayMovie = {
-  title: 'Dune: Desert Planet',
-  year: 2021,
-  duration: '148 Minutes',
-  rating: 'PG-18',
-  genre: 'Action',
-  type: 'Movie',
-  score: 4.3,
-
-  isPremium: true,
-  image: require('../../assets/dune.jpg'), 
+type Movie = {
+  id: number;
+  title: string;
+  poster_path: string;
+  backdrop_path?: string;
+  vote_average: number;
+  release_date: string;
+  genre_ids?: number[];
+  runtime?: number;
 };
 
-
-
-const popularMovies = [
-  { id: '1', title: 'Thor', rating: 4.5, image: thor },
-  { id: '2', title: 'The Fountain', rating: 4.5, image: fountain },
-  { id: '3', title: 'Forrest Gump', rating: 4.5, image: gump },
-  { id: '4', title: 'Midsommar', rating: 4.5, image: mid },
-  { id: '5', title: 'Life of PI', rating: 4.5, image: lifeofpi },
-];
+type Genre = {
+  id: number;
+  name: string;
+};
 
 const SearchScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const [todayMovie, setTodayMovie] = useState<Movie | null>(null);
+  const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    const renderToday = () => (
-    <View style={styles.todayContainer}>
-      <Image source={todayMovie.image} style={styles.todayImage} />
-      <View style={styles.todayInfo}>
-        
-        {todayMovie.isPremium && (
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+   const nowPlayingRes = await fetch(
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US`
+        );
+        const nowPlayingData = await nowPlayingRes.json();
+        const firstMovie = nowPlayingData.results[0];
 
-          <View style={styles.premiumBadge}>
-            <Text style={styles.premiumText}>Premium</Text>
-          </View>
-        )}
-        <Text style={styles.todayTitle} numberOfLines={1}>{todayMovie.title}</Text>
-        <Text style={{ color: '#f5c518', fontSize: 14 }}>⭐ {todayMovie.score}</Text>
-        <View style={styles.todayMeta}>
-          <Text style={styles.metaText}>📅 {todayMovie.year}</Text>
-          <Text style={styles.metaText}>⌚ {todayMovie.duration}</Text>
+    const movieDetailsRes = await fetch(
+          `https://api.themoviedb.org/3/movie/${firstMovie.id}?api_key=${TMDB_API_KEY}&language=en-US`
+        );
+    const movieDetails = await movieDetailsRes.json();
+        setTodayMovie({ ...firstMovie, runtime: movieDetails.runtime });
 
-          <Text style={styles.metaBadge}>{todayMovie.rating}</Text>
-        </View>
-        <Text style={styles.metaText}>🎬 {todayMovie.genre} | {todayMovie.type}</Text>
-      </View>
-    </View>
-  );
-const renderHeader = () => (
+     const popularRes = await fetch(
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${TMDB_API_KEY}&language=en-US`
+        );
+   const popularData = await popularRes.json();
+        setPopularMovies(popularData.results.slice(0, 5));
+
+     const genresRes = await fetch(
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${TMDB_API_KEY}&language=en-US`
+        );
+  const genresData = await genresRes.json();
+        setGenres([{ id: -1, name: 'All' }, ...genresData.genres]);
+      } catch (e) {
+        console.error('TMDb API error:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const getGenreNames = (ids: number[]) => {
+
+
+    return genres.filter((g) => ids.includes(g.id)).map((g) => g.name).join(', ');
+  };
+
+  const renderHeader = () => (
     <View>
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="Type title, categories, years, etc..."
           placeholderTextColor="#aaa"
-          style={styles.searchInput}
-        />
+          style={styles.searchInput} />
       </View>
 
       <FlatList
-        data={categories}
+        data={genres}
         horizontal
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id.toString()}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.categoryButton}
-            onPress={() => navigation.navigate('Category', { category: item })}
-          >
-            <Text style={styles.categoryText}>{item}</Text>
+            onPress={() => navigation.navigate('CategoryScreen', { genreId: item.id, genreName: item.name })}>
+            <Text style={styles.categoryText}>{item.name}</Text>
           </TouchableOpacity>
         )}
         contentContainerStyle={styles.categoryContainer}
       />
 
       <Text style={styles.sectionTitle}>Today</Text>
-      {renderToday()}
+      {todayMovie && (
+
+        <View style={styles.todayContainer}>
+          <Image source={{ uri: IMAGE_URL + todayMovie.poster_path }} style={styles.todayImage} />
+          <View style={styles.todayInfo}>
+            <Text style={styles.todayTitle}>{todayMovie.title}</Text>
+            <Text style={{ color: '#f5c518', fontSize: 14 }}>⭐ {todayMovie.vote_average.toFixed(1)}</Text>
+            <View style={styles.todayMeta}>
+              <Text style={styles.metaText}>📅 {todayMovie.release_date.slice(0, 4)}</Text>
+              <Text style={styles.metaText}>⌚ {todayMovie.runtime} min</Text>
+
+              <Text style={styles.metaText}>🎬 {getGenreNames(todayMovie.genre_ids || [])}</Text>
+            </View>
+          </View>
+        </View>
+      )}
 
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Recommend for you</Text>
-        <TouchableOpacity onPress={() => navigation.getParent()?.navigate('Popular')}>
+
+        <TouchableOpacity>
           <Text style={styles.seeAll}>See All</Text>
+
         </TouchableOpacity>
       </View>
 
       <FlatList
         data={popularMovies}
-        
         horizontal
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
+
         renderItem={({ item }) => (
           <View style={styles.movieCard}>
-            <Image source={item.image} style={styles.movieImage} />
+            <Image source={{ uri: IMAGE_URL + item.poster_path }} style={styles.movieImage} />
+
             <Text style={styles.movieTitle}>{item.title}</Text>
-            <Text style={styles.movieRating}>⭐ {item.rating}</Text>
+            <Text style={styles.movieRating}>⭐ {item.vote_average.toFixed(1)}</Text>
           </View>
         )}
-        showsHorizontalScrollIndicator={false}/>
-
+        showsHorizontalScrollIndicator={false} />
     </View>
   );
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#181818' }}>
+
+        <ActivityIndicator size="large" color="#00bcd4" />
+      </View>
+    );
+  }
+
   return (
     <KeyboardAvoidingView
+
       style={{ flex: 1, backgroundColor: '#181818' }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        
-     <FlatList
-  data={[]}
-  renderItem={() => null}
-  ListHeaderComponent={renderHeader}
-  contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: 20 }}
-  showsVerticalScrollIndicator={false}/>
+      <FlatList
 
+        data={[]}
+        renderItem={() => null}
+        ListHeaderComponent={renderHeader}
+        contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: 20 }}
+        showsVerticalScrollIndicator={false}
+/>
     </KeyboardAvoidingView>
   );
 };
 
-
 export default SearchScreen;
 
 const styles = StyleSheet.create({
-
   searchContainer: {
+
     marginTop: 60,
     backgroundColor: '#2b2b2bff',
     borderRadius: 12,
@@ -168,50 +193,17 @@ const styles = StyleSheet.create({
   },
 
   searchInput: {
-
     color: '#fff',
     fontSize: 16,
     fontFamily: 'serif',
-    marginTop: -8,
   },
-
-
-  carousel: {
-    marginTop: 30,
-    marginBottom: 20,
-  },
-
-  carouselItem: {
-    width: 300,
-    marginRight: 16,
-  },
-
-  featuredImage: {
-    width: '100%',
-    height: 160,
-    borderRadius: 12,
-  },
-
-  featuredTitle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 8,
-  },
-
-
-  featuredDate: {
-    color: '#aaa',
-    fontSize: 12,
-    marginTop: 2,
-  },
-
 
 
   categoryContainer: {
     marginBottom: 20,
-    marginTop:30,
+    marginTop: 30,
   },
+
 
   categoryButton: {
     backgroundColor: '#1e1e1e',
@@ -221,8 +213,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
-     width: 120,
+    minWidth: 100,
   },
+
 
   categoryText: {
     color: 'white',
@@ -242,9 +235,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     fontFamily: 'serif',
-    marginBottom:20,
-    marginTop:20,
+    marginBottom: 20,
+    marginTop: 20,
   },
+
 
   seeAll: {
     color: '#00bcd4',
@@ -253,16 +247,15 @@ const styles = StyleSheet.create({
 
   movieCard: {
     marginRight: 16,
-    width
-    : 120,
+    width: 120,
   },
+
   movieImage: {
     width: '100%',
     height: 180,
     borderRadius: 10,
-
-
   },
+
   movieTitle: {
     color: 'white',
     marginTop: 8,
@@ -270,50 +263,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'serif',
   },
-  
+
+
   movieRating: {
     color: '#f5c518',
     fontSize: 12,
-    
   },
+
   todayContainer: {
     flexDirection: 'row',
     marginTop: 10,
     backgroundColor: '#1e1e1e',
     borderRadius: 12,
     overflow: 'hidden',
-    marginBottom:30,
+    marginBottom: 30,
   },
-
 
   todayImage: {
     width: 130,
     height: 190,
-
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12,
   },
 
-  
+
   todayInfo: {
     flex: 1,
     padding: 10,
     justifyContent: 'space-around',
-  },
-
-  premiumBadge: {
-    backgroundColor: '#ff9800',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-    alignSelf: 'flex-start',
-    marginBottom: 4,
-  },
-
-  premiumText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
   },
 
   todayTitle: {
@@ -322,7 +299,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'serif',
     marginBottom: 4,
-
   },
 
   todayMeta: {
@@ -332,21 +308,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
   },
-
+  
   metaText: {
     color: '#ccc',
     fontSize: 12,
     marginRight: 10,
   },
-  metaBadge: {
-
-    backgroundColor: '#00bcd4',
-    color: '#fff',
-    fontSize: 12,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-
 });

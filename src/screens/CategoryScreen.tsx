@@ -14,18 +14,21 @@ const Posters: Record<CategoryType, any[]> = {
   Comedy: [
 
     require('../../assets/gump.jpg'),
+
     require('../../assets/avatar1.jpg'),
   ],
 
 
   Animation: [
  require('../../assets/lifeofpi.jpg'),
+
     require('../../assets/avatar1.jpg'),
   ],
 
 
   Documentary: [
  require('../../assets/fountain.jpg'),
+
     require('../../assets/mid.jpg'),
   ],
 
@@ -58,6 +61,7 @@ const CategoryScreen: React.FC = () => {
 
       <FlatList
         data={posters}
+
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}
         
@@ -68,6 +72,7 @@ const CategoryScreen: React.FC = () => {
         showsVerticalScrollIndicator={false} />
     </View>
   );
+
 };
 
 export default CategoryScreen;
@@ -78,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#181818',
     padding: 20,
+    
     paddingTop: 10,
   },
 

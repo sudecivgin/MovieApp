@@ -72,11 +72,13 @@ const styles = StyleSheet.create({
     paddingTop: 200,
     justifyContent: 'flex-start',
   },
+  
   backButton: {
     position: 'absolute',
     top: 50,
     left: 20,
   },
+
   title: {
     fontSize: 24,
     color: '#00e6e6',
@@ -85,6 +87,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'serif',
   },
+
+
   subtitle: {
     fontSize: 14,
     color: '#aaa',
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     fontFamily: 'serif',
   },
+
   label: {
     color: '#ccc',
     marginBottom: 8,

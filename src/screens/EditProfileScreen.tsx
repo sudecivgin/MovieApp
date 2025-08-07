@@ -16,6 +16,7 @@ const EditProfileScreen = () => {
   const [email, ] = useState('Sude04@gmail.com');
   const [password, ] = useState('************');
   const [phone, ] = useState('+90 545564646486');
+  
   const [error, setError] = useState('');
 
   const handleSave = () => {

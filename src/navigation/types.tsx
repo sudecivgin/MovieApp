@@ -1,3 +1,6 @@
+import { Movie } from './movie';
+
+
 export type RootStackParamList = {
   Onboarding: undefined;
   LoginScreen: undefined;
@@ -6,6 +9,8 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   Verification: undefined;
   CreatePassword: undefined;
+  MovieDetailScreen: { movieId: number };
+  
 
   Home: undefined;
   Category: { category: 'Comedy' | 'Animation' | 'Documentary' | 'All' };
@@ -14,5 +19,12 @@ export type RootStackParamList = {
   EditProfile: undefined;  
     Policies: undefined;
     Help:undefined;
+    WatchLater:undefined;
+     CategoryScreen: { 
+      genreId: number; genreName: string 
+          initialMovies?: Movie[];
+    };
+    
 
+     
 };

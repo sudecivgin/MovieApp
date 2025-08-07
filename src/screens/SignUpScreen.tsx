@@ -86,24 +86,22 @@ try {
           keyboardType="email-address"
           autoCapitalize="none"
           value={email}
-          onChangeText={setEmail}
-        />
+          onChangeText={setEmail}/>
 
         <View style={styles.passwordContainer}>
 
 
-          <TextInput
+   <TextInput
             style={styles.passwordInput}
             placeholder="Password"
             placeholderTextColor="#888"
             secureTextEntry={secureText}
             value={password}
             onChangeText={setPassword}
-              autoCorrect={false}
-          />
+              autoCorrect={false}/>
 
 
-          <TouchableOpacity onPress={() => setSecureText(!secureText)}>
+<TouchableOpacity onPress={() => setSecureText(!secureText)}>
             <Icon
               name={secureText ? 'eye-off-outline' : 'eye-outline'}
               size={22}
@@ -112,12 +110,12 @@ try {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.checkboxContainer}>
+    <View style={styles.checkboxContainer}>
 
-          <TouchableOpacity onPress={() => setIsChecked(!isChecked)} style={styles.checkbox}>
+     <TouchableOpacity onPress={() => setIsChecked(!isChecked)} style={styles.checkbox}>
             {isChecked && <View style={styles.checkedBox} />}
           </TouchableOpacity>
-          <Text style={styles.checkboxText}>
+      <Text style={styles.checkboxText}>
             I agree to the <Text style={styles.link}>Terms and Services</Text> and{' '}
             <Text style={styles.link}>Privacy Policy</Text>
           </Text>
@@ -125,7 +123,7 @@ try {
 
         <TouchableOpacity
 
-          style={[styles.button, !isChecked && styles.buttonDisabled]}
+      style={[styles.button, !isChecked && styles.buttonDisabled]}
           onPress={handleSignUp}
           disabled={!isChecked}>
           <Text style={styles.buttonText}>Sign Up</Text>

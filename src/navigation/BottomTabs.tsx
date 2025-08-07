@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
-import DownloadsScreen from '../screens/DownloadsScreen';
+import WatchLater from '../screens/WatchLater';
 import ProfileScreen from '../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
@@ -15,12 +15,14 @@ const BottomTabs: React.FC = () => {
       return (
         <Tab.Navigator
       initialRouteName="Home" 
+
       screenOptions={({ route }) => ({
         
         headerShown: false,
         tabBarStyle: {
           backgroundColor: '#1e1e1e',
           borderTopWidth: 0,
+          
           height: 60,
         },
 
@@ -62,7 +64,7 @@ const BottomTabs: React.FC = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Downloads" component={DownloadsScreen} />
+      <Tab.Screen name="WatchLater" component={WatchLater} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
       
     </Tab.Navigator>

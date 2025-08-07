@@ -9,16 +9,19 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+
 import { useNavigation } from '@react-navigation/native';
 
 const Help = () => {
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
   const [message, setMessage] = useState('');
 
   const handleSubmit = () => {
     if (!name || !email || !message) {
+
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
@@ -26,11 +29,12 @@ const Help = () => {
     Alert.alert('Success', 'Your message has been sent!');
     setName('');
     setEmail('');
+
     setMessage('');
   };
 
   const faqs = [
-    { question: 'How can I reset my password?' },
+ { question: 'How can I reset my password?' },
     { question: 'Where can I find my subscription?' },
     { question: 'How do I contact support?' },
   ];
@@ -39,7 +43,7 @@ const Help = () => {
     <ScrollView style={styles.container}>
 
 
-      <View style={styles.header}>
+  <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#fff" />
         </TouchableOpacity>
@@ -48,7 +52,7 @@ const Help = () => {
       </View>
 
       <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
-      <View style={styles.card}>
+     <View style={styles.card}>
         {faqs.map((faq, index) => (
           <View key={index} style={styles.faqItem}>
             <Text style={styles.faqText}>• {faq.question}</Text>
@@ -58,33 +62,34 @@ const Help = () => {
 
       <Text style={styles.sectionTitle}>Send Us a Message</Text>
       <View style={styles.card}>
-        <TextInput
+<TextInput
           style={styles.input}
           placeholder="Your Name"
-          placeholderTextColor="#aaa"
+      placeholderTextColor="#aaa"
           value={name}
           onChangeText={setName}/>
 
 
-        <TextInput
+    <TextInput
           style={styles.input}
           placeholder="Your Email"
-          placeholderTextColor="#aaa"
+      placeholderTextColor="#aaa"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"/>
 
 
-        <TextInput
+   <TextInput
           style={[styles.input, { height: 100 }]}
+
           placeholder="Your Message"
-          placeholderTextColor="#aaa"
+       placeholderTextColor="#aaa"
           value={message}
           onChangeText={setMessage}
           multiline/>
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit Feedback</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+         <Text style={styles.buttonText}>Submit Feedback</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -94,7 +99,9 @@ const Help = () => {
 export default Help;
 
 const styles = StyleSheet.create({
+
   container: {
+
     flex: 1,
     backgroundColor: '#121212',
     paddingHorizontal: 20,
@@ -111,6 +118,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'serif',
       marginLeft: 12,
+
+
+
   },
   sectionTitle: {
     color: '#aaa',
@@ -120,6 +130,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: 'serif',
   },
+
   card: {
     backgroundColor: '#1E1E1E',
     borderRadius: 12,
@@ -130,11 +141,15 @@ const styles = StyleSheet.create({
   faqItem: {
     paddingVertical: 15,
   },
+
+
   faqText: {
     color: '#fff',
     fontSize: 15,
     fontFamily: 'serif',
   },
+
+
   input: {
     backgroundColor: '#2A2A2A',
     color: '#fff',
@@ -143,6 +158,8 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     fontFamily: 'serif',
   },
+
+
   button: {
     backgroundColor: '#00e6e6',
     borderRadius: 25,
@@ -150,6 +167,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+
+
   buttonText: {
     color: '#000',
     fontWeight: 'bold',
