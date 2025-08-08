@@ -89,6 +89,7 @@ const LoginPage: React.FC = () => {
         <Text style={[styles.label, { marginTop: 20 }]}>Password</Text>
         <View style={styles.passwordContainer}>
           <TextInput
+          
             style={[
               styles.input,
               {

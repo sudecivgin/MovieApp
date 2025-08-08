@@ -1,7 +1,9 @@
 import { Movie } from './movie';
-
-
 export type RootStackParamList = {
+   MainApp: {
+    screen?: string;
+    params?: object;
+  };
   Onboarding: undefined;
   LoginScreen: undefined;
   LoginPage: undefined;
@@ -14,7 +16,6 @@ export type RootStackParamList = {
 
   Home: undefined;
   Category: { category: 'Comedy' | 'Animation' | 'Documentary' | 'All' };
-  MainApp: undefined; 
   Popular: undefined;
   EditProfile: undefined;  
     Policies: undefined;

@@ -1,4 +1,3 @@
-// WatchLater.tsx
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -79,8 +78,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 60,
-    marginBottom: 16,
+    marginTop: 8,
+    marginBottom: 24,
     fontFamily: 'serif',
   },
 

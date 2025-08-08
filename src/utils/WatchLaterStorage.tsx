@@ -1,4 +1,3 @@
-// src/utils/WatchLaterStorage.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type Movie = {
@@ -6,6 +5,7 @@ export type Movie = {
   title: string;
   poster_path: string;
   vote_average: number;
+    genre_ids?: number[]; 
 };
 
 const STORAGE_KEY = 'watchLater';
