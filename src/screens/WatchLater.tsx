@@ -33,38 +33,45 @@ const WatchLater = () => {
     loadMovies();
   }, []);
 
+  const renderItem = ({ item }: { item: Movie }) => (
+    <View style={styles.card}>
+      <Image source={{ uri: IMAGE_URL + item.poster_path }} style={styles.image}/>
+      <View style={styles.info}>
+        <Text style={styles.movieTitle}>{item.title}</Text>
+        <Text style={styles.rating}>⭐ {item.vote_average.toFixed(1)}</Text>
+        <TouchableOpacity onPress={() => handleRemove(item.id)}>
+          <Text style={styles.remove}>Remove</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>📌 Watch Later</Text>
-      
-      {movies.length === 0 ? (
-        <Text style={styles.empty}>No movies added yet.</Text>
-      ) : (
-        <FlatList
-          data={movies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <Image
-                source={{ uri: IMAGE_URL + item.poster_path }}
-            style={styles.image}/>
-              <View style={styles.info}>
-                <Text style={styles.movieTitle}>{item.title}</Text>
-                <Text style={styles.rating}>⭐ {item.vote_average.toFixed(1)}</Text>
-                <TouchableOpacity onPress={() => handleRemove(item.id)}>
-                  <Text style={styles.remove}>Remove</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        />
-      )}
+
+      <FlatList
+        style={{ flex: 1 }}
+        data={movies}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+        ListEmptyComponent={
+          <Text style={styles.empty}>No movies added yet.</Text>
+        }
+        contentContainerStyle={
+          movies.length === 0
+            ? { flexGrow: 1, justifyContent: 'center' }
+            : { paddingBottom: 16 }
+        }
+        showsVerticalScrollIndicator
+        removeClippedSubviews
+      />
     </SafeAreaView>
   );
 };
 
 export default WatchLater;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -72,8 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     padding: 16,
   },
-
-
   title: {
     color: 'white',
     fontSize: 22,
@@ -82,60 +87,45 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     fontFamily: 'serif',
   },
-
-
   empty: {
     color: '#888',
     textAlign: 'center',
-    marginTop: 40,
     fontSize: 16,
     fontFamily: 'serif',
   },
-
-
   card: {
     flexDirection: 'row',
-    marginBottom: 16,
     backgroundColor: '#1c1c1c',
     borderRadius: 10,
     overflow: 'hidden',
+    paddingRight: 8,
   },
-
   image: {
     width: 100,
     height: 150,
   },
-
-
   info: {
     marginLeft: 12,
     justifyContent: 'center',
     flex: 1,
     paddingRight: 8,
   },
-
-
   movieTitle: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'serif',
   },
-
-
   rating: {
     color: '#f5c518',
     fontSize: 14,
     marginTop: 4,
     fontFamily: 'serif',
   },
-
-
   remove: {
     color: 'red',
     marginTop: 10,
     fontSize: 14,
     fontFamily: 'serif',
-    
   },
 });

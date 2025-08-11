@@ -57,7 +57,7 @@ const slides: Slide[] = [
     id: '3',
     title: 'Ready to dive into the movie world?',
     description: 'Find, watch, and share your favorite films anytime, anywhere.',
-    image: require('../../assets/image6.png'),
+    image: require('../../assets/imagetum.png'),
   },
 
 ];

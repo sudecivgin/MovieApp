@@ -5,6 +5,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   Image,
+  
   ImageSourcePropType,
 } from 'react-native';
 
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     height: '100%',
+  backgroundColor: '#222'
   },
 
   textContainer: {
@@ -80,25 +82,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 0,
   },
+  
+
+  textContainerWithBox: {
+  backgroundColor: 'rgba(30, 30, 30, 0.8)',
+  paddingVertical: 25,
+  paddingHorizontal: 20,
+  borderRadius: 20,
+  borderWidth: 1,
+  shadowRadius: 10,
+  elevation: 40,
+  
+
+},
+
   overlayTextContainer: {
     position: 'absolute',
     bottom: 50,
     width: '100%',
     alignItems: 'center',
     paddingHorizontal: 20,
-  },
-
-  textContainerWithBox: {
-    backgroundColor: '#1e1e1eff',
-    padding: 50,
-    borderRadius: 20,
-    justifyContent: 'center',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-    elevation: 50,
-    width: '100%',
-    marginBottom: 0.1,
   },
 
   title: {
@@ -122,9 +125,9 @@ const styles = StyleSheet.create({
 
   firstImage: {
   resizeMode: 'contain',
-
   marginTop: 20,
 },
+
 
 
 });

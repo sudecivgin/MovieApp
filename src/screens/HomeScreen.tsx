@@ -1,4 +1,4 @@
-// src/screens/HomeScreen/HomeScreen.tsx
+
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -13,11 +13,12 @@ import {
   Platform,
   ImageSourcePropType,
   ActivityIndicator,
+  Dimensions,
+  Animated,
 } from 'react-native';
 import { RootStackParamList } from '../navigation/types';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
 import { TMDB_API_KEY } from '@env';
 
 const avatar: ImageSourcePropType = require('../../assets/AvatarHome.png');
@@ -32,12 +33,24 @@ type Movie = {
   release_date?: string;
 };
 
-type Genre = {
-  id: number;
-  name: string;
-};
+type Genre = { id: number | null; name: string };
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+
+const OUTER_PADDING = 20;
+const { width } = Dimensions.get('window');
+const LAYOUT_WIDTH = width - OUTER_PADDING * 2;
+const ITEM_WIDTH = Math.round(LAYOUT_WIDTH * 0.8);
+const SPACER = (LAYOUT_WIDTH - ITEM_WIDTH) / 2;
+
+
+const capWords = (s: string) =>
+  s
+    ? s
+        .split(' ')
+        .map(w => (w ? w[0].toUpperCase() + w.slice(1).toLowerCase() : ''))
+        .join(' ')
+    : '';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -49,6 +62,8 @@ const HomeScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const scrollX = React.useRef(new Animated.Value(0)).current;
+
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -58,15 +73,15 @@ const HomeScreen: React.FC = () => {
           `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=1`
         );
         const nowPlayingData = await nowPlayingResponse.json();
-        setNowPlaying(nowPlayingData.results);
+        setNowPlaying(nowPlayingData.results || []);
 
         const genresResponse = await fetch(
           `https://api.themoviedb.org/3/genre/movie/list?api_key=${TMDB_API_KEY}&language=en-US`
         );
         const genresData = await genresResponse.json();
-        const allGenres = [
+        const allGenres: Genre[] = [
           { id: null, name: 'All' },
-          ...genresData.genres,
+          ...(genresData.genres || []),
           { id: -1, name: 'Popular' },
         ];
         setGenres(allGenres);
@@ -74,8 +89,9 @@ const HomeScreen: React.FC = () => {
         const popularResponse = await fetch(
           `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`
         );
+
         const popularData = await popularResponse.json();
-        setFilteredMovies(popularData.results);
+        setFilteredMovies(popularData.results || []);
       } catch (error) {
         console.error('Veri çekme hatası:', error);
       } finally {
@@ -98,8 +114,9 @@ const HomeScreen: React.FC = () => {
 
         const response = await fetch(url);
         const json = await response.json();
-        setFilteredMovies(json.results);
+        setFilteredMovies(json.results || []);
       } catch (error) {
+
         console.error('Filming error by category:', error);
       }
     };
@@ -117,7 +134,7 @@ const HomeScreen: React.FC = () => {
         )}`
       );
       const data = await res.json();
-      setFilteredMovies(data.results);
+      setFilteredMovies(data.results || []);
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -143,32 +160,83 @@ const HomeScreen: React.FC = () => {
           value={searchQuery}
           onChangeText={setSearchQuery}
           onSubmitEditing={handleSearch}
-          returnKeyType="search" />
-
+          returnKeyType="search"/>
 
       </View>
 
-      <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.carousel}>
-        {nowPlaying.map((movie) => (
-          <TouchableOpacity
-            key={movie.id}
-            onPress={() => navigation.navigate('MovieDetailScreen', { movieId: movie.id })}
-            style={styles.carouselItem}>
+      <Animated.FlatList
+        data={nowPlaying}
+     keyExtractor={(it) => String(it.id)}
+     horizontal
+     showsHorizontalScrollIndicator={false}
+        bounces={false}
+        decelerationRate="fast"
+        snapToInterval={ITEM_WIDTH}
+        snapToAlignment="start"
+        contentContainerStyle={[styles.carousel, { paddingHorizontal: SPACER }]}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: true }
+        )}
+        renderItem={({ item, index }) => {
+          const inputRange = [
+            (index - 1) * ITEM_WIDTH,
+            index * ITEM_WIDTH,
+            (index + 1) * ITEM_WIDTH,
+          ];
 
+          const scale = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.9, 1, 0.9],
+            extrapolate: 'clamp',
+          });
 
-            <Image
-              source={{ uri: `https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path}` }}
-              style={styles.featuredImage}
-            />
-            <Text style={styles.featuredTitle}>{movie.title}</Text>
-            {movie.release_date && (
-              <Text style={styles.featuredReleaseDate}>{new Date(movie.release_date).getFullYear()}</Text>
-            )}
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+          const translateY = scrollX.interpolate({
+            inputRange,
+            outputRange: [6, -6, 6],
+            extrapolate: 'clamp',
+          });
 
-      <Text style={styles.category}>CATEGORY</Text>
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0.9, 1, 0.9],
+            extrapolate: 'clamp',
+          });
+
+          return (
+            <View style={{ width: ITEM_WIDTH }}>
+              <Animated.View
+                style={[
+                  styles.featuredCard,
+                  { transform: [{ scale }, { translateY }], opacity },
+                ]}>
+
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() => navigation.navigate('MovieDetailScreen', { movieId: item.id })}
+                  style={{ flex: 1 }}>
+                  <Image
+                    source={{ uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}` }}
+                    style={styles.featuredImage}
+                  />
+                  <View style={styles.featuredOverlay}>
+                    <Text style={styles.featuredTitle} numberOfLines={1}>
+                      {item.title}
+                    </Text>
+                    {!!item.release_date && (
+                      <Text style={styles.featuredReleaseDate}>
+                        {new Date(item.release_date).getFullYear()}
+                      </Text>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              </Animated.View>
+            </View>
+          );
+        }}
+      />
+
+      <Text style={styles.category}>Category</Text>
       {loading ? (
         <ActivityIndicator size="small" color="#00bcd4" />
       ) : (
@@ -177,8 +245,8 @@ const HomeScreen: React.FC = () => {
             <TouchableOpacity
               key={index}
               style={[styles.categoryButton, selectedCategory === genre.id && { backgroundColor: '#00bcd4' }]}
-              onPress={() => setSelectedCategory(genre.id)}>
-
+              onPress={() => setSelectedCategory(genre.id)}
+            >
               <Text style={styles.categoryText}>{genre.name}</Text>
             </TouchableOpacity>
           ))}
@@ -188,10 +256,10 @@ const HomeScreen: React.FC = () => {
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>
           {selectedCategory === null
-            ? 'ALL MOVIES'
+            ? 'All Movies'
             : selectedCategory === -1
-            ? 'MOST POPULAR'
-            : genres.find((g) => g.id === selectedCategory)?.name.toUpperCase() + ' MOVIES'}
+            ? 'Most Popular'
+            : `${capWords(genres.find(g => g.id === selectedCategory)?.name || '')} Movies`}
         </Text>
         <TouchableOpacity
           onPress={() => {
@@ -203,8 +271,8 @@ const HomeScreen: React.FC = () => {
                 initialMovies: filteredMovies,
               });
             }
-          }}
-        >
+          }}>
+
           <Text style={styles.seeAll}>See All</Text>
         </TouchableOpacity>
       </View>
@@ -212,10 +280,13 @@ const HomeScreen: React.FC = () => {
   );
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#000' }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#000' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <ScrollView
         style={{ backgroundColor: '#181818' }}
-        contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: 20 }}
+        contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: OUTER_PADDING }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
@@ -224,7 +295,6 @@ const HomeScreen: React.FC = () => {
         {filteredMovies.length === 0 ? (
           <Text style={styles.noMoviesText}>No movies found in this category.</Text>
         ) : (
-
           <FlatList
             data={filteredMovies}
             horizontal
@@ -252,29 +322,24 @@ const HomeScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   loadingContainer: {
-
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#181818',
   },
-
   noMoviesText: {
     color: 'white',
     textAlign: 'center',
     marginTop: 50,
     fontSize: 16,
-    fontFamily:'serif',
+    fontFamily: 'serif',
   },
-
 
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 70,
   },
-
-
   avatar: {
     width: 48,
     height: 48,
@@ -282,13 +347,10 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginTop: 10,
   },
-
   textContainer: {
     flex: 1,
     marginTop: 10,
   },
-
-
   helloText: {
     color: '#fff',
     fontSize: 18,
@@ -302,9 +364,7 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
   },
 
-
   searchContainer: {
-
     marginTop: 40,
     backgroundColor: '#2b2b2bff',
     borderRadius: 12,
@@ -317,32 +377,51 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
   },
 
-
-
   carousel: {
     marginTop: 30,
     marginBottom: 20,
   },
-
-
-  carouselItem: {
-    width: 300,
-    marginRight: 16,
+  featuredCard: {
+    height: 180,
+    borderRadius: 16,
+    overflow: 'hidden',
+    backgroundColor: '#1e1e1e',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOpacity: 0.25,
+        shadowRadius: 12,
+        shadowOffset: { width: 0, height: 8 },
+      },
+      android: { elevation: 8 },
+    }),
   },
-
-
   featuredImage: {
+    ...StyleSheet.absoluteFillObject,
     width: '100%',
-    height: 160,
-    borderRadius: 12,
-
+    height: '100%',
+    borderRadius: 16,
   },
-
+  featuredOverlay: {
+    position: 'absolute',
+    left: 12,
+    right: 12,
+    bottom: 12,
+  },
   featuredTitle: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    marginTop: 8,
+    textShadowColor: 'rgba(0,0,0,0.6)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
+    fontFamily: 'serif',
+  },
+  featuredReleaseDate: {
+    color: '#ccc',
+    fontSize: 13,
+    marginTop: 2,
+    fontFamily: 'serif',
   },
 
   category: {
@@ -353,12 +432,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
   },
-
-
   categoryContainer: {
     marginBottom: 20,
   },
-
   categoryButton: {
     backgroundColor: '#1e1e1e',
     borderRadius: 12,
@@ -369,7 +445,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     minWidth: 100,
   },
-
   categoryText: {
     color: 'white',
     fontSize: 14,
@@ -381,8 +456,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
-
-
   sectionTitle: {
     color: 'white',
     fontSize: 17,
@@ -391,26 +464,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
   },
-
-
   seeAll: {
     color: '#00bcd4',
     fontSize: 14,
-    fontFamily:'serif',
+    fontFamily: 'serif',
   },
-
 
   movieCard: {
     marginRight: 16,
     width: 120,
   },
-
   movieImage: {
     width: '100%',
     height: 180,
     borderRadius: 10,
   },
-
   movieTitle: {
     color: 'white',
     marginTop: 8,
@@ -418,23 +486,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'serif',
   },
-
-
   movieRating: {
     color: '#f5c518',
     fontSize: 12,
   },
-
-
-  featuredReleaseDate: {
-  color: '#ccc',
-  fontSize: 13,
-  marginTop: 2,
-  fontFamily: 'serif',
-},
- // eslint-disable-next-line no-dupe-keys
- 
-
 });
 
 export default HomeScreen;
