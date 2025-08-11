@@ -9,6 +9,7 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const EditProfileScreen = () => {
@@ -34,7 +35,8 @@ const EditProfileScreen = () => {
 
 
       <View style={styles.profileSection}>
-        <Image source={require('../../assets/AvatarHome.png')} style={styles.avatar} />
+<Image source={require('../../../assets/AvatarHome.png')} style={styles.avatar} />
+
         <TouchableOpacity style={styles.editIcon}>
           <Icon name="pencil" size={14} color="#181818" />
 

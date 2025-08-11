@@ -9,11 +9,14 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {
+
   useNavigation,
   NavigationProp,
 } from '@react-navigation/native';
-import { AuthContext } from '../context/AuthContext';
+
+import { AuthContext } from '../../context/AuthContext';
 
 type RootStackParamList = {
   LoginScreen: undefined;
@@ -53,16 +56,16 @@ const LoginPage: React.FC = () => {
 
   return (
     
-    <SafeAreaView style={styles.container}>
+<SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.pageTitle}>Log In</Text>
       </View>
 
-      <TouchableOpacity
+   <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.navigate('LoginScreen')}>
         <Icon name="arrow-left" size={24} color="white" />
-      </TouchableOpacity>
+  </TouchableOpacity>
 
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeTitle}>Welcome!</Text>

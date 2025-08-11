@@ -12,8 +12,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types';
-import { AuthContext } from '../context/AuthContext';
+import { RootStackParamList } from '../../navigation/types';
+import { AuthContext } from '../../context/AuthContext';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -39,7 +39,7 @@ const ProfileScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
-        <Image source={require('../../assets/AvatarHome.png')} style={styles.avatar} />
+<Image source={require('../../../assets/AvatarHome.png')} style={styles.avatar} />
         <View style={styles.userInfo}>
 
           <Text style={styles.name}>Sude</Text>
@@ -51,6 +51,7 @@ const ProfileScreen = () => {
       </View>
 
       {/* Premium Kısmı*/}
+
       <View style={styles.premiumBox}>
         <Icon name="crown" size={24} color="#fff" />
         <View style={{ marginLeft: 10 }}>
@@ -62,13 +63,13 @@ const ProfileScreen = () => {
       </View>
 
       {/* Account kısmı*/}
+
       <Text style={styles.sectionHeader}>Account</Text>
 
 <OptionItem
   icon="lock-outline"
   label="Change Password"
-  onPress={() => navigation.navigate('ResetPassword')}
-/>
+  onPress={() => navigation.navigate('ResetPassword')}/>
 
       {/* General  */}
       <Text style={styles.sectionHeader}>General</Text>
@@ -84,8 +85,7 @@ const ProfileScreen = () => {
 <OptionItem
   icon="message-question-outline"
   label="Help & Feedback"
-  onPress={() => navigation.navigate('Help')}
-/>
+  onPress={() => navigation.navigate('Help')}/>
 
       <OptionItem icon="information-outline" label="About Us" />
 
@@ -106,6 +106,7 @@ const OptionItem = ({
   icon: string;
   label: string;
   onPress?: () => void;
+
 }) => (
 
   <TouchableOpacity style={styles.optionRow} onPress={onPress}>
@@ -124,12 +125,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#181818',
     paddingHorizontal: 20,
   },
+
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 70,
     marginBottom: 20,
   },
+  
   avatar: {
     width: 56,
     height: 56,

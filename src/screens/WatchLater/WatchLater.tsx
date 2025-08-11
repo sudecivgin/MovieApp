@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getWatchLater, removeFromWatchLater, Movie } from '../utils/WatchLaterStorage';
+import { getWatchLater, removeFromWatchLater, Movie } from '../../utils/WatchLaterStorage';
 
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
 

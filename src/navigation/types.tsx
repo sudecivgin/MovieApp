@@ -15,7 +15,6 @@ export type RootStackParamList = {
   
 
   Home: undefined;
-  Category: { category: 'Comedy' | 'Animation' | 'Documentary' | 'All' };
   Popular: undefined;
   EditProfile: undefined;  
     Policies: undefined;

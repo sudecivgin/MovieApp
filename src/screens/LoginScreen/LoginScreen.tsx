@@ -23,8 +23,8 @@ const LoginScreen: React.FC = () => {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require('../../assets/LOGO.png')}
-      />
+        source={require('../../../assets/LOGO.png')}/>
+        
       <Text style={styles.cinemax}>
         Enter your registered{'\n'}
         Phone Number to Sign Up

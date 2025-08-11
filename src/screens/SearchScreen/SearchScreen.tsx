@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types';
+import { RootStackParamList } from '../../navigation/types';
 import { TMDB_API_KEY } from '@env';
 
-import { getWatchLater } from '../utils/WatchLaterStorage';
+import { getWatchLater } from '../../utils/WatchLaterStorage';
 
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -42,7 +42,6 @@ const SearchScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const [todayMovie, setTodayMovie] = useState<Movie | null>(null);
   const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
-
   const [genres, setGenres] = useState<Genre[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,10 +70,8 @@ const SearchScreen: React.FC = () => {
         const watchLaterMovies = await getWatchLater();
         const genreCounts: { [key: number]: number } = {};
 
-
         watchLaterMovies.forEach((movie) => {
           movie.genre_ids?.forEach((id) => {
-
             if (id !== undefined && id !== null) {
               genreCounts[id] = (genreCounts[id] || 0) + 1;
             }
@@ -108,9 +105,9 @@ const SearchScreen: React.FC = () => {
   }, []);
 
   const getGenreNames = (ids: number[]) => {
-
     return genres.filter((g) => ids.includes(g.id)).map((g) => g.name).join(', ');
   };
+  const getPrimaryGenre = (ids?: number[]) => (ids && ids.length ? getGenreNames(ids).split(', ')[0] : '');
 
   const renderHeader = () => (
     <View>
@@ -118,9 +115,9 @@ const SearchScreen: React.FC = () => {
         <TextInput
           placeholder="Type title, categories, years, etc..."
           placeholderTextColor="#aaa"
-          style={styles.searchInput} />
+          style={styles.searchInput}
+        />
       </View>
-
 
       <FlatList
         data={genres}
@@ -130,11 +127,14 @@ const SearchScreen: React.FC = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.categoryButton}
-            onPress={() => navigation.navigate('CategoryScreen', { genreId: item.id, genreName: item.name })}>
+            onPress={() =>
+              navigation.navigate('CategoryScreen', { genreId: item.id, genreName: item.name })
+            }>
             <Text style={styles.categoryText}>{item.name}</Text>
           </TouchableOpacity>
         )}
-        contentContainerStyle={styles.categoryContainer}/>
+        contentContainerStyle={styles.categoryContainer}
+      />
 
       <Text style={styles.sectionTitle}>Today</Text>
       {todayMovie && (
@@ -144,41 +144,55 @@ const SearchScreen: React.FC = () => {
             <Text style={styles.todayTitle}>{todayMovie.title}</Text>
             <Text style={{ color: '#f5c518', fontSize: 14 }}>⭐ {todayMovie.vote_average.toFixed(1)}</Text>
             <View style={styles.todayMeta}>
-
               <Text style={styles.metaText}>📅 {todayMovie.release_date.slice(0, 4)}</Text>
               <Text style={styles.metaText}>⌚ {todayMovie.runtime} min</Text>
               <Text style={styles.metaText}>🎬 {getGenreNames(todayMovie.genre_ids || [])}</Text>
             </View>
-
           </View>
         </View>
       )}
 
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Recommend for you</Text>
-        <TouchableOpacity>
-          <Text style={styles.seeAll}>See All</Text>
-        </TouchableOpacity>
+        <TouchableOpacity />
       </View>
 
       <FlatList
         data={popularMovies}
         horizontal
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.movieCard}>
-            <Image source={{ uri: IMAGE_URL + item.poster_path }} style={styles.movieImage} />
-            <Text style={styles.movieTitle}>{item.title}</Text>
-            <Text style={styles.movieRating}>⭐ {item.vote_average.toFixed(1)}</Text>
-          </View>
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => navigation.navigate('MovieDetailScreen', { movieId: item.id })}
+            style={[styles.card, index === 0 && { marginLeft: 0 }]}>
 
+            <View style={styles.posterWrap}>
+              <Image
+                source={{ uri: IMAGE_URL + item.poster_path }}
+                style={styles.poster}/>
+              {!!item.vote_average && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeStar}>★</Text>
+                  <Text style={styles.badgeText}>{item.vote_average.toFixed(1)}</Text>
+                </View>
+              )}
+            </View>
+
+            <Text style={styles.cardTitle} numberOfLines={1}>
+              {item.title}
+            </Text>
+            <Text style={styles.cardMeta} numberOfLines={1}>
+              {getPrimaryGenre(item.genre_ids)}
+            </Text>
+          </TouchableOpacity>
         )}
-        showsHorizontalScrollIndicator={false}/>
+        contentContainerStyle={{ paddingRight: 20 }}/>
     </View>
   );
 
   if (loading) {
-
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#181818' }}>
         <ActivityIndicator size="large" color="#00bcd4" />
@@ -189,11 +203,10 @@ const SearchScreen: React.FC = () => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#181818' }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined} >
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <FlatList
         data={[]}
         renderItem={() => null}
-
         ListHeaderComponent={renderHeader}
         contentContainerStyle={{ paddingBottom: 40, paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
@@ -204,7 +217,6 @@ const SearchScreen: React.FC = () => {
 
 export default SearchScreen;
 
-
 const styles = StyleSheet.create({
   searchContainer: {
     marginTop: 60,
@@ -213,7 +225,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 8,
   },
-
   searchInput: {
     color: '#fff',
     fontSize: 16,
@@ -224,8 +235,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 30,
   },
-
-
+  
   categoryButton: {
     backgroundColor: '#1e1e1e',
     borderRadius: 12,
@@ -242,7 +252,6 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
   },
 
-
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -257,36 +266,59 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-
-  seeAll: {
-    color: '#00bcd4',
-    fontSize: 14,
-    fontFamily:'serif',
-    },
-  movieCard: {
-    marginRight: 16,
-    width: 120,
+  card: {
+    width: 160,
+    backgroundColor: '#1b1c21ff',
+    borderRadius: 18,
+    padding: 10,
+    marginRight: 14,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOpacity: 0.25,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 6 },
+      },
+      android: { elevation: 6 },
+    }),
   },
-
-
-  movieImage: {
+  posterWrap: {
+    borderRadius: 14,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  poster: {
     width: '100%',
-    height: 180,
-    borderRadius: 10,
+    height: 210,
   },
-
-
-  movieTitle: {
-    color: 'white',
-    marginTop: 8,
-    marginBottom: 5,
+  badge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: '#ff914d',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  badgeStar: { color: '#fff', fontSize: 12, marginRight: 4 },
+  badgeText: { color: '#fff', fontSize: 12, fontWeight: '700' },
+  cardTitle: {
+    color: '#fff',
     fontSize: 14,
+    fontWeight: '700',
+    marginTop: 10,
     fontFamily: 'serif',
   },
-  movieRating: {
-    color: '#f5c518',
+  cardMeta: {
+    color: '#9aa3b2',
     fontSize: 12,
+    marginTop: 2,
+    fontFamily: 'serif',
   },
+
+  // Today kartı (mevcut)
   todayContainer: {
     flexDirection: 'row',
     marginTop: 10,
@@ -324,5 +356,6 @@ const styles = StyleSheet.create({
     color: '#ccc',
     fontSize: 12,
     marginRight: 10,
+    fontFamily: 'serif',
   },
 });

@@ -10,17 +10,17 @@ import {
   Linking,
   Platform,
   Alert,
-
 } from 'react-native';
 
 import { RouteProp, useNavigation } from '@react-navigation/native';
+
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TMDB_API_KEY } from '@env';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { RootStackParamList } from '../navigation/types';
+import { RootStackParamList } from '../../navigation/types';
 
 const BLUR = Platform.select({ ios: 40, android: 25 }) as number;
 
@@ -32,6 +32,7 @@ type TmdbVideo = { key: string; site: 'YouTube' | string; type: string; official
 type TmdbCast = { id: number; name: string; character: string; profile_path: string | null };
 
 type Movie = {
+
   id: number;
   title: string;
   poster_path: string | null;
@@ -95,7 +96,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
   }, [movie]);
 
   const openTrailer = useCallback(() => {
-    if (!trailerUrl) {
+   if (!trailerUrl) {
       Alert.alert('Trailer not found', 'This movie has no official trailer on YouTube.');
       return;
     }
@@ -107,7 +108,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
     try {
       const json = await AsyncStorage.getItem('watchLater');
 
-      const list: Movie[] = json ? JSON.parse(json) : [];
+  const list: Movie[] = json ? JSON.parse(json) : [];
       const exists = list.some(m => m.id === movie.id);
       if (exists) {
         Alert.alert('Already Added', `"${movie.title}" is already in your Watch Later list.`);
@@ -188,7 +189,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
         <>
           <Image source={{ uri: bgUri }} style={styles.bgImage} blurRadius={BLUR} resizeMode="cover" />
 
-          <LinearGradient
+    <LinearGradient
             pointerEvents="none"
             colors={['rgba(11,13,16,0.75)', 'rgba(11,13,16,0.35)', 'rgba(11,13,16,0.00)']}
             locations={[0, 0.4, 1]}
@@ -198,8 +199,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
             pointerEvents="none"
             colors={['rgba(11,13,16,0.00)', 'rgba(11,13,16,0.45)', 'rgba(11,13,16,0.85)']}
             locations={[0, 0.55, 1]}
-            style={styles.gradientBottom}
-          />
+            style={styles.gradientBottom}/>
         </>
       )}
 

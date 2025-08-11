@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { AuthContext } from '../context/AuthContext'; // 🔥 Firebase bağlamı
+import { AuthContext } from '../../context/AuthContext'; // 🔥 Firebase bağlamı
 
 type RootStackParamList = {
   LoginScreen: undefined;

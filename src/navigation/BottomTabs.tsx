@@ -4,10 +4,10 @@ import { View, StyleSheet,} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
-import WatchLater from '../screens/WatchLater';
-import ProfileScreen from '../screens/ProfileScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import SearchScreen from '../screens/SearchScreen/SearchScreen';
+import WatchLater from '../screens/WatchLater/WatchLater';
+import ProfileScreen from '../screens/ProfileMore/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +77,7 @@ const BottomTabs: React.FC = () => {
         name="WatchLater"
         component={WatchLater}
         options={{
-          tabBarLabel: 'Watch', // UZUN LABELI KISALT
+          tabBarLabel: 'Watch', 
         }}
       />
       <Tab.Screen name="Profile" component={ProfileScreen} />
