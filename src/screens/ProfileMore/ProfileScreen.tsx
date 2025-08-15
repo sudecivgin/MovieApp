@@ -52,15 +52,19 @@ const ProfileScreen = () => {
 
       {/* Premium Kısmı*/}
 
-      <View style={styles.premiumBox}>
-        <Icon name="crown" size={24} color="#fff" />
-        <View style={{ marginLeft: 10 }}>
-          <Text style={styles.premiumText}>Premium Member</Text>
-          <Text style={styles.premiumSubText}>
-            New movies are coming for you, Download Now!
-          </Text>
-        </View>
-      </View>
+    <TouchableOpacity
+  style={styles.premiumBox}
+  onPress={() => navigation.navigate('Vip')}
+>
+  <Icon name="crown" size={24} color="#fff" />
+  <View style={{ marginLeft: 10 }}>
+    <Text style={styles.premiumText}>Premium Member</Text>
+    <Text style={styles.premiumSubText}>
+      New movies are coming for you, Download Now!
+    </Text>
+  </View>
+</TouchableOpacity>
+
 
       {/* Account kısmı*/}
 
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
   },
 
   premiumBox: {
-    backgroundColor: '#9f5000ff',
+    backgroundColor: '#b2600eff',
     borderRadius: 12,
     flexDirection: 'row',
     padding: 16,

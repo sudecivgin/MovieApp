@@ -48,7 +48,7 @@ const WatchLater = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>📌 Watch Later</Text>
+      <Text style={styles.title}>Watch Later</Text>
 
       <FlatList
         style={{ flex: 1 }}
@@ -76,7 +76,7 @@ export default WatchLater;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#181818',
     padding: 16,
   },
   title: {

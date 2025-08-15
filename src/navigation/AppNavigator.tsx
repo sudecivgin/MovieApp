@@ -19,6 +19,8 @@ import WatchLater from '../screens/WatchLater/WatchLater';
 
 import { AuthContext } from '../context/AuthContext';
 import { RootStackParamList } from './types';
+import VipScreen from '../screens/ProfileMore/VipScreen';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -37,12 +39,12 @@ const AuthStack = () => (
 const AppStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="MainApp" component={BottomTabs} options={{ headerShown: false }} />
+<Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+
 <Stack.Screen
   name="ResetPassword"
   component={ResetPasswordScreen}
-  options={{ headerShown: false }} 
-/>
-
+  options={{ headerShown: false }} />
 
     <Stack.Screen
       name="EditProfile"
@@ -57,12 +59,16 @@ const AppStack = () => (
     <Stack.Screen name="Help" component={Help} options={{ headerShown: false }} />
 
     <Stack.Screen name="MovieDetailScreen" component={MovieDetailScreen} options={{ headerShown: false }} />
-
+<Stack.Screen
+  name="Vip"
+  component={VipScreen}
+  options={{ headerShown: false }}  
+/>
     <Stack.Screen
       name="WatchLater"
       component={WatchLater}
       options={{
-        title: '📌 Watch Later',
+        title: 'Watch Later',
         headerStyle: { backgroundColor: '#181818' },
         headerTintColor: 'white',
         headerTitleStyle: { fontFamily: 'serif' },
