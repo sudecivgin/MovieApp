@@ -7,8 +7,8 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 Özellikler
 
 - 🔐 **Firebase Authentication** – E-posta/şifre ile kullanıcı giriş & kayıt işlemleri yapılmıştır.
-- 🎞️ **TMDB API** – Popüler, gündem ve türlerine göre film listeleridir.
-- 📌 **Watch Later (Sonra İzle)** – Filmleri kaydet, sonra izleme listedisir.
+- 🎞️ **TMDB API** – Popüler, gündem ve türlerine göre film listelerini çekme işlemi içindir.
+- 📌 **Watch Later (Sonra İzle)** – Filmleri kaydetme ve sonra izleme listesidir.
 - 🔍 **Arama** – Film isimlerine göre arama özelliği sunar.
 - 🌓 **Temiz UI** – Modern ve sade tasarım sunar.
 
@@ -29,8 +29,9 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 ---
 
 ## 📸 Ekran Görüntüleri
+
 ## SplashScreen
-<img src="assets/screenshots/splashscreen.png" width="200" /> 
+<img src="assets/screenshots/splashscreen.png" width="300" /> 
 
 ### Onboarding 
 <p align="center">
