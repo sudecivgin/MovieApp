@@ -29,12 +29,52 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 ---
 
 ## 📸 Ekran Görüntüleri
-## 📸 Ekran Görüntüleri
+## SplashScreen
+<img src="assets/screenshots/splashscreen.png" width="200" /> 
 
 ### Onboarding 
-,<p align="center">
+<p align="center">
 <img src="assets/screenshots/movie-1-Photoroom (1).png" width="200" /> 
 <img src="assets/screenshots/movie-2-Photoroom (1).png" width="200" />
 <img src="assets/screenshots/movie-3-Photoroom (1).png" width="200" /> 
 <img src="assets/screenshots/movie-4-Photoroom (1).png" width="200" /> 
 </p>
+
+## Home Screen
+<p align="center">
+<img src="assets/screenshots/home1-Photoroom.png" width="200" /> 
+<img src="assets/screenshots/home2-Photoroom.png" width="200" />
+<img src="assets/screenshots/home3-Photoroom.png" width="200" /> 
+</p>
+
+## Movie Detail 
+<p align="center">
+<img src="assets/screenshots/detay1-Photoroom.png" width="200" /> 
+<img src="assets/screenshots/detay2-Photoroom.png" width="200" />
+<img src="assets/screenshots/detay3-Photoroom.png" width="200" /> 
+</p>
+
+
+## Search Screen
+<p align="center">
+<img src="assets/screenshots/arama-Photoroom.png" width="200" /> 
+</p>
+
+## Watch Later Screen
+<p align="center">
+<img src="assets/screenshots/movie-1-Photoroom (1).png" width="200" /> 
+<img src="assets/screenshots/movie-2-Photoroom (1).png" width="200" />
+<img src="assets/screenshots/movie-3-Photoroom (1).png" width="200" /> 
+<img src="assets/screenshots/movie-4-Photoroom (1).png" width="200" /> 
+</p>
+
+## Profile Screen
+<p align="center">
+<img src="assets/screenshots/profil1-Photoroom.png" width="200" /> 
+<img src="assets/screenshots/profil2-Photoroom.png" width="200" />
+<img src="assets/screenshots/profil3-Photoroom.png" width="200" /> 
+<img src="assets/screenshots/profil4-Photoroom.png" width="200" /> 
+  <img src="assets/screenshots/profil5-Photoroom.png" width="200" /> 
+
+</p>
+
