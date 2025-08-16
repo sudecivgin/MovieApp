@@ -29,23 +29,17 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 ---
 
 ## 📸 Ekran Görüntüleri
+## 📸 Ekran Görüntüleri
 
-| Onboarding | Home | Category |
-|------------|------|----------|
-| ![Onboarding] <img width="516" height="1027" alt="movie-1-Photoroom (1)" src="https://github.com/user-attachments/assets/613a83d0-e850-4d45-92dd-d372ab8fea75" />
-<img width="499" height="1033" alt="movie-2-Photoroom (1)" src="https://github.com/user-attachments/assets/35abfd22-62c5-41b6-a36c-35db2cb70bbe" />
-<img width="505" height="1033" alt="movie-3-Photoroom (1)" src="https://github.com/user-attachments/assets/af5423e5-319c-4a75-b6dc-f698e3be3ba1" />
-<img width="501" height="1029" alt="movie-4-Photoroom (1)" src="https://github.com/user-attachments/assets/7c711c0c-bff9-4ec8-b05b-732ea799e914" />
-
-
-
-| ![Home](assets/screenshots/home.png) | ![Category](assets/screenshots/category.png) |
-
-| Movie Detail | Login | Watch Later |
-|--------------|-------|-------------|
-| ![Detail](assets/screenshots/detail.png) | ![Login](assets/screenshots/login.png) | ![WatchLater](assets/screenshots/watchlater.png) |
-
----
-
-
+### Onboarding
+<p align="center">
+  <img src="<img width="516" height="1027" alt="movie-1-Photoroom (1)" src="https://github.com/user-attachments/assets/700aba92-2591-445d-b813-4df76a28139e" />
+" width="200" />
+  <img src="<img width="499" height="1033" alt="movie-2-Photoroom (1)" src="https://github.com/user-attachments/assets/283b6db3-52d4-4610-80fe-a90c27174b80" />
+" width="200" />
+  <img src="<img width="505" height="1033" alt="movie-3-Photoroom (1)" src="https://github.com/user-attachments/assets/2c91ea40-d5a0-4db4-8228-bee04eda628c" />
+" width="200" />
+  <img src="<img width="501" height="1029" alt="movie-4-Photoroom (1)" src="https://github.com/user-attachments/assets/1a38c3e5-ff42-4f7e-ba4e-380fbfb4afc0" />
+" width="200" />
+</p>
 
