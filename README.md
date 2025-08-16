@@ -1,6 +1,6 @@
-🎬 WATCHTIME (Movieapp)
+🎬 CINEMAX (MovieApp)
 
-Watchtime uygulaması; React Native CLI kullanılarak geliştirilmiş, TypeScript tabanlı modern bir mobil film keşif uygulamasıdır.
+Cinemax uygulaması; React Native CLI kullanılarak geliştirilmiş, TypeScript tabanlı modern bir mobil film keşif uygulamasıdır.
 Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve güncel filmleri keşfetme ve izlenecek filmleri kaydetme imkânı sunar.
 
 ---
