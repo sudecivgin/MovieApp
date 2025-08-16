@@ -34,7 +34,7 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 ### Onboarding 
 ,<p align="center">
 <img src="assets/screenshots/movie-1-Photoroom (1).png" width="200" /> 
-<img src="assets/screenshots/movie-2-Photoroom (2).png" width="200" />
-<img src="assets/screenshots/movie-3-Photoroom (2).png" width="200" /> 
-<img src="assets/screenshots/movie-4-Photoroom (2).png" width="200" /> 
+<img src="assets/screenshots/movie-2-Photoroom (1).png" width="200" />
+<img src="assets/screenshots/movie-3-Photoroom (1).png" width="200" /> 
+<img src="assets/screenshots/movie-4-Photoroom (1).png" width="200" /> 
 </p>
