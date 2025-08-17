@@ -22,7 +22,7 @@ const VipScreen: React.FC = () => {
 const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#15131F' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#181818' }}>
 
       <ScrollView
         contentContainerStyle={styles.container}
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingBottom: 24,
-    backgroundColor: '#181818',
+    backgroundColor: '#181818' ,
   },
 
   topBar: {

@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#1e1e1eff',
+    backgroundColor: 'rgba(30,30,30,1)' ,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
 
   input: {
 
-    backgroundColor: '#161616ff',
+      backgroundColor: '#161616ff',
     color: 'white',
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   },
 
   passwordContainer: {
-    backgroundColor: '#161616ff',
+     backgroundColor: '#161616ff',
     borderRadius: 16,
     paddingHorizontal: 16,
     paddingVertical: 12,
