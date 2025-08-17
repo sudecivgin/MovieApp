@@ -42,7 +42,7 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 ## Login Screen
 <p align="center">
 <img src="assets/screenshots/movie-5-Photoroom (2).png" width="200" /> 
-<img src="assets/screenshots/movie-6-Photoroom (3).png" width="230" />
+<img src="assets/screenshots/movie-6-Photoroom (3).png" width="240" />
 <img src="assets/screenshots/login-Photoroom (1).png" width="200" /> 
 <img src="assets/screenshots/movie-9-Photoroom (2).png" width="200" /> 
 </p>
