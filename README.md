@@ -41,6 +41,14 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 <img src="assets/screenshots/movie-4-Photoroom (1).png" width="200" /> 
 </p>
 
+## Login Screen
+<p align="center">
+<img src="assets/screenshots/movie-5-Photoroom (2).png" width="200" /> 
+<img src="assets/screenshots/movie-6-Photoroom (2).png" width="200" />
+<img src="assets/screenshots/login-Photoroom (1).png" width="200" /> 
+<img src="assets/screenshots/movie-9-Photoroom (2).png" width="200" /> 
+</p>
+
 ## Home Screen
 <p align="center">
 <img src="assets/screenshots/home1-Photoroom.png" width="200" /> 
@@ -55,7 +63,6 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 <img src="assets/screenshots/detay3-Photoroom.png" width="200" /> 
 </p>
 
-
 ## Search Screen
 <p align="center">
 <img src="assets/screenshots/arama-Photoroom.png" width="200" /> 
@@ -64,7 +71,6 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 ## Watch Later Screen
 <p align="center">
 <img src="assets/screenshots/izle1-Photoroom.png" width="200" /> 
-
 </p>
 
 ## Profile Screen
@@ -73,7 +79,6 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 <img src="assets/screenshots/profil2-Photoroom.png" width="200" />
 <img src="assets/screenshots/profil3-Photoroom.png" width="200" /> 
 <img src="assets/screenshots/profil4-Photoroom.png" width="200" /> 
-  <img src="assets/screenshots/profil5-Photoroom.png" width="200" /> 
-
+<img src="assets/screenshots/profil5-Photoroom.png" width="200" /> 
 </p>
 
