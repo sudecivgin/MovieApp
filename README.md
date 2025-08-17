@@ -73,7 +73,7 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 
 ## Profile Screen
 <p align="center">
-<img src="assets/screenshots/profil1-Photoroom.png" width="200" /> 
+<img src="assets/screenshots/profil1-Photoroom.png" width="195" /> 
 <img src="assets/screenshots/profil2-Photoroom.png" width="200" />
 <img src="assets/screenshots/profil3-Photoroom (2).png" width="220" /> 
 <img src="assets/screenshots/profil4-Photoroom.png" width="200" /> 
