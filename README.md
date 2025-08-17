@@ -4,7 +4,7 @@ Cinemax uygulaması; React Native CLI kullanılarak geliştirilmiş, TypeScript 
 Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve güncel filmleri keşfetme ve izlenecek filmleri kaydetme imkânı sunar.
 
 
-Özellikler
+## Özellikler
 
 - 🔐 **Firebase Authentication** – E-posta/şifre ile kullanıcı giriş & kayıt işlemleri yapılmıştır.
 - 🎞️ **TMDB API** – Popüler, gündem ve türlerine göre film listelerini çekme işlemi içindir.
@@ -26,7 +26,7 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 
 
 
-📸 Ekran Görüntüleri
+## 📸 Ekran Görüntüleri
 
 ## SplashScreen
 <img src="assets/screenshots/splashscreen.png" width="300" /> 
