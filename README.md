@@ -3,7 +3,7 @@
 Cinemax uygulaması; React Native CLI kullanılarak geliştirilmiş, TypeScript tabanlı modern bir mobil film keşif uygulamasıdır.
 Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve güncel filmleri keşfetme ve izlenecek filmleri kaydetme imkânı sunar.
 
----
+
 Özellikler
 
 - 🔐 **Firebase Authentication** – E-posta/şifre ile kullanıcı giriş & kayıt işlemleri yapılmıştır.
@@ -12,7 +12,7 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 - 🔍 **Arama** – Film isimlerine göre arama özelliği sunar.
 - 🌓 **Temiz UI** – Modern ve sade tasarım sunar.
 
----
+
 
 ## 🛠️ Kullanılan Teknolojiler
 
@@ -24,9 +24,7 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 - [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)  
 - Çevre değişkenleri için `react-native-dotenv`  
 
----
 
----
 
 ## 📸 Ekran Görüntüleri
 
