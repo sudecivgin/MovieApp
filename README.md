@@ -26,12 +26,12 @@ Firebase tabanlı backend altyapısı ve API entegrasyonu ile, popüler ve günc
 
 
 
-## 📸 Ekran Görüntüleri
+📸 Ekran Görüntüleri
 
 ## SplashScreen
 <img src="assets/screenshots/splashscreen.png" width="300" /> 
 
-### Onboarding 
+## Onboarding 
 <p align="center">
 <img src="assets/screenshots/movie-1-Photoroom (1).png" width="200" /> 
 <img src="assets/screenshots/movie-2-Photoroom (1).png" width="200" />
