@@ -5,66 +5,71 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-
   ViewToken,
 } from 'react-native';
 
+import { useTranslation } from 'react-i18next';
 import OnboardingItem from '../components/OnboardingItem';
 import Paginator from '../components/Paginator';
-
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type Slide = {
   id: string;
   title: string;
   description: string;
-  image: any; 
+  image: any;
 };
 
+type SlideDef = {
+  id: string;
+  titleKey: string;
+  descKey: string;
+  image: any;
+};
 
 type NavigationProp = StackNavigationProp<any, 'Onboarding'>;
+type Props = { navigation: NavigationProp };
 
-
-type Props = {
-  navigation: NavigationProp;
-};
-
-//Slide verileri
-const slides: Slide[] = [
+// Onboarding slide tanımları (sadece key + görsel)
+const SLIDE_DEFS: SlideDef[] = [
   {
     id: '1',
-    title: 'Hello! Welcome to the best movies.',
-    description: 'Start exploring immediately.',
+    titleKey: 'ONBOARDING_1_TITLE',
+    descKey: 'ONBOARDING_1_SUBTITLE',
     image: require('../../assets/imageilk.png'),
   },
   {
     id: '2',
-    title: 'If you want to record and discover your favorite movies',
-    description: 'Find movies, series and more.',
+    titleKey: 'ONBOARDING_2_TITLE',
+    descKey: 'ONBOARDING_2_SUBTITLE',
     image: require('../../assets/image2.png'),
   },
-
   {
-
     id: '2.5',
-    title: 'Your taste, our recommendations!',
-    description: 'The more you use, the better we get to know you.',
+    titleKey: 'ONBOARDING_25_TITLE',
+    descKey: 'ONBOARDING_25_SUBTITLE',
     image: require('../../assets/imagesonn.png'),
   },
-
-
   {
     id: '3',
-    title: 'Ready to dive into the movie world?',
-    description: 'Find, watch, and share your favorite films anytime, anywhere.',
+    titleKey: 'ONBOARDING_3_TITLE',
+    descKey: 'ONBOARDING_3_SUBTITLE',
     image: require('../../assets/imagetum.png'),
   },
-
 ];
 
 const Onboarding: React.FC<Props> = ({ navigation }) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const flatListRef = useRef<FlatList<Slide>>(null);
+
+  // Key’leri çeviriyle doldur
+  const slides: Slide[] = SLIDE_DEFS.map(d => ({
+    id: d.id,
+    title: t(d.titleKey),
+    description: t(d.descKey),
+    image: d.image,
+  }));
 
   const navigateToLogin = () => {
     navigation.navigate('LoginScreen');
@@ -72,8 +77,8 @@ const Onboarding: React.FC<Props> = ({ navigation }) => {
 
   const nextSlide = () => {
     if (currentIndex < slides.length - 1) {
-   flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
-     setCurrentIndex(currentIndex + 1);
+      flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
+      setCurrentIndex(currentIndex + 1);
     } else {
       navigateToLogin();
     }
@@ -86,7 +91,6 @@ const Onboarding: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
-
     <View style={styles.container}>
       <FlatList
         ref={flatListRef}
@@ -97,17 +101,21 @@ const Onboarding: React.FC<Props> = ({ navigation }) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}/>
-   <View style={styles.bottomContainer}>
-        <Paginator totalPages={slides.length} currentPage={currentIndex} onNextPress={nextSlide} />
+        viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
+      />
 
-  {currentIndex !== slides.length - 1 && (
+      <View style={styles.bottomContainer}>
+        <Paginator
+          totalPages={slides.length}
+          currentPage={currentIndex}
+          onNextPress={nextSlide}
+        />
+
+        {currentIndex !== slides.length - 1 && (
           <TouchableOpacity onPress={navigateToLogin}>
-            <Text style={styles.skipText}>Skip</Text>
+            <Text style={styles.skipText}>{t('ONBOARDING_SKIP')}</Text>
           </TouchableOpacity>
-
         )}
-        
       </View>
     </View>
   );
@@ -120,9 +128,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1e1e1eff',
   },
-
-
- bottomContainer: {
+  bottomContainer: {
     position: 'absolute',
     bottom: 40,
     left: 0,
@@ -130,16 +136,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-
-
   skipText: {
     marginTop: 10,
     fontSize: 14,
-
     color: '#999',
     textAlign: 'center',
-
     fontFamily: 'serif',
-
   },
 });
