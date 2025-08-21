@@ -34,26 +34,26 @@ type Props = { navigation: NavigationProp };
 const SLIDE_DEFS: SlideDef[] = [
   {
     id: '1',
-    titleKey: 'ONBOARDING_1_TITLE',
-    descKey: 'ONBOARDING_1_SUBTITLE',
+    titleKey: "The latest movies and\nseries are here",
+    descKey: "Streaming in high quality",
     image: require('../../assets/imageilk.png'),
   },
   {
     id: '2',
-    titleKey: 'ONBOARDING_2_TITLE',
-    descKey: 'ONBOARDING_2_SUBTITLE',
+    titleKey: "Download to watch later",
+    descKey:"Ad-free viewing experience",
     image: require('../../assets/image2.png'),
   },
   {
     id: '2.5',
-    titleKey: 'ONBOARDING_25_TITLE',
-    descKey: 'ONBOARDING_25_SUBTITLE',
+    titleKey: "Stream on multiple devices",
+    descKey: "Text of different languages",
     image: require('../../assets/imagesonn.png'),
   },
   {
     id: '3',
-    titleKey: 'ONBOARDING_3_TITLE',
-    descKey: 'ONBOARDING_3_SUBTITLE',
+    titleKey:  "With the best audio quality",
+    descKey: "Let’s stream your favorite movie",
     image: require('../../assets/imagetum.png'),
   },
 ];
