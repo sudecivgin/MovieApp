@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
+
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 

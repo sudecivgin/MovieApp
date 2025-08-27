@@ -1,83 +1,82 @@
+// src/i18n/rcLoader.ts
 import remoteConfig from '@react-native-firebase/remote-config';
-import * as RNLocalize from 'react-native-localize';
-import i18n from '.'; 
+import i18n from './index';
+import RNLocalize from 'react-native-localize';
 
-type Dict = Record<string, string>;
-type RCShape = Dict | { common?: Dict; onboarding?: Dict };
+const RC_KEYS = {
+  en: 'languages_en',
+  tr: 'languages_tr',
+  es: 'languages_es',
+} as const;
 
-export async function initRemoteConfig() {
+type SupportedLang = keyof typeof RC_KEYS;
+const SUPPORTED: SupportedLang[] = ['en', 'tr', 'es'];
+
+/** findBestAvailableLanguage yerine getLocales ile tespit */
+function detectLang(): SupportedLang {
+  try {
+    const locales = RNLocalize.getLocales?.() ?? [];
+    // Örn: [{ languageCode: 'tr', countryCode: 'TR', languageTag: 'tr-TR', ...}]
+    for (const loc of locales) {
+      const code = (loc.languageCode || '').toLowerCase();
+      if (SUPPORTED.includes(code as SupportedLang)) {
+        return code as SupportedLang;
+      }
+      // Yedek: languageTag üzerinden bak
+      const tag = (loc.languageTag || '').toLowerCase();
+      if (tag.startsWith('tr')) return 'tr';
+      if (tag.startsWith('es')) return 'es';
+      if (tag.startsWith('en')) return 'en';
+    }
+  } catch {}
+  return 'en';
+}
+
+export const initRemoteConfig = async () => {
   await remoteConfig().setConfigSettings({
-    fetchTimeMillis: 10_000,                               
-    minimumFetchIntervalMillis: __DEV__ ? 0 : 12 * 60 * 60 * 1000,
+    minimumFetchIntervalMillis: __DEV__ ? 0 : 3600 * 1000,
+    fetchTimeMillis: 10_000,
   });
 
-  await remoteConfig().setDefaults({
-    translations_tr: '{}',
-    translations_en: '{}',
-    translations_es: '{}',
-    translations_tr_common: '{}',
-    translations_tr_onboarding: '{}',
-    translations_en_common: '{}',
-    translations_en_onboarding: '{}',
-    translations_es_common: '{}',
-    translations_es_onboarding: '{}',
-  });
-}
-
-function mergeIntoI18n(lang: string, data: RCShape) {
-  const obj = data as any;
-  if (obj?.common || obj?.onboarding) {
-    if (obj.common) i18n.addResourceBundle(lang, 'common', obj.common, true, true);
-    if (obj.onboarding) i18n.addResourceBundle(lang, 'onboarding', obj.onboarding, true, true);
-  } else {
-    i18n.addResourceBundle(lang, 'common', data as Dict, true, true);
+  try {
+    await remoteConfig().fetchAndActivate();
+  } catch (e) {
+    if (__DEV__) console.warn('Remote Config fetch/activate failed:', e);
   }
-}
+};
 
-export async function loadTranslationsFromRC(lang?: string) {
-  const deviceLang = RNLocalize.getLocales()?.[0]?.languageCode?.toLowerCase() ?? 'tr';
-  const target = (lang ?? i18n.language ?? deviceLang).toLowerCase();
+/**
+ * RC'den aktif dil paketini yükler.
+ * - preferred verilirse onu kullanır; verilmezse cihaz dilini detectLang() ile seçer.
+ * - RC JSON geçerliyse i18n bundle'ını günceller ve dili değiştirir.
+ */
+export const loadTranslationsFromRC = async (preferred?: SupportedLang) => {
+  const lang: SupportedLang =
+    (preferred && SUPPORTED.includes(preferred) ? preferred : detectLang());
 
-  await remoteConfig().fetchAndActivate();
+  const key = RC_KEYS[lang];
+  const raw = remoteConfig().getString(key);
+  if (!raw) return;
 
-  let loaded = false;
-
-  const main = remoteConfig().getValue(`translations_${target}`).asString();
-  if (main) {
-    try {
-      mergeIntoI18n(target, JSON.parse(main) as RCShape);
-      loaded = true;
-    } catch (e) {
-      if (__DEV__) console.warn('[RC] parse error (main):', e);
-    }
+  try {
+    const parsed = JSON.parse(raw);
+    // mevcutları override et + deep merge
+    i18n.addResourceBundle(lang, 'translation', parsed, true, true);
+    i18n.changeLanguage(lang);
+  } catch (err) {
+    if (__DEV__) console.warn('RC parse error:', err);
   }
+};
 
-  const common = remoteConfig().getValue(`translations_${target}_common`).asString();
-  if (common) {
-    try {
-      i18n.addResourceBundle(target, 'common', JSON.parse(common) as Dict, true, true);
-      loaded = true;
-    } catch (e) {
-      if (__DEV__) console.warn('[RC] parse error (common):', e);
-    }
+export function loadLanguageBundle(lang: 'en'|'tr'|'es'): boolean {
+  try {
+    const map = { en: 'languages_en', tr: 'languages_tr', es: 'languages_es' } as const;
+    const raw = remoteConfig().getString(map[lang]);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    i18n.addResourceBundle(lang, 'translation', parsed, true, true);
+    return true;
+  } catch {
+    return false;
   }
-
-  const onboarding = remoteConfig().getValue(`translations_${target}_onboarding`).asString();
-  if (onboarding) {
-    try {
-      i18n.addResourceBundle(target, 'onboarding', JSON.parse(onboarding) as Dict, true, true);
-      loaded = true;
-    } catch (e) {
-      if (__DEV__) console.warn('[RC] parse error (onboarding):', e);
-    }
-  }
-
-  return loaded;
-}
-export async function changeLanguage(lang: string) {
-  const target = (lang || 'tr').toLowerCase();
-  await loadTranslationsFromRC(target);
-
-  await i18n.changeLanguage(target);
-  return target;
 }
