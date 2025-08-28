@@ -7,7 +7,6 @@ import {
   Text,
   ViewToken,
 } from 'react-native';
-
 import { useTranslation } from 'react-i18next';
 import OnboardingItem from '../components/OnboardingItem';
 import Paginator from '../components/Paginator';
@@ -30,31 +29,30 @@ type SlideDef = {
 type NavigationProp = StackNavigationProp<any, 'Onboarding'>;
 type Props = { navigation: NavigationProp };
 
-// Onboarding slide tanımları (sadece key + görsel)
 const SLIDE_DEFS: SlideDef[] = [
   {
     id: '1',
     titleKey: "The latest movies and\nseries are here",
     descKey: "Streaming in high quality",
-    image: require('../../assets/imageilk.png'),
+    image: require('../assets/imageilk.png'),
   },
   {
     id: '2',
     titleKey: "Download to watch later",
     descKey:"Ad-free viewing experience",
-    image: require('../../assets/image2.png'),
+    image: require('../assets/image2.png'),
   },
   {
     id: '2.5',
     titleKey: "Stream on multiple devices",
     descKey: "Text of different languages",
-    image: require('../../assets/imagesonn.png'),
+    image: require('../assets/imagesonn.png'),
   },
   {
     id: '3',
     titleKey:  "With the best audio quality",
     descKey: "Let’s stream your favorite movie",
-    image: require('../../assets/imagetum.png'),
+    image: require('../assets/imagetum.png'),
   },
 ];
 
@@ -63,7 +61,6 @@ const Onboarding: React.FC<Props> = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const flatListRef = useRef<FlatList<Slide>>(null);
 
-  // Key’leri çeviriyle doldur
   const slides: Slide[] = SLIDE_DEFS.map(d => ({
     id: d.id,
     title: t(d.titleKey),

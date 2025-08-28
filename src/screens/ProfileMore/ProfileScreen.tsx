@@ -9,7 +9,6 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
@@ -35,11 +34,10 @@ const ProfileScreen = () => {
       },
     ]);
   };
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
-<Image source={require('../../../assets/AvatarHome.png')} style={styles.avatar} />
+<Image source={require('../../assets/AvatarHome.png')} style={styles.avatar} />
         <View style={styles.userInfo}>
 
           <Text style={styles.name}>Sude</Text>

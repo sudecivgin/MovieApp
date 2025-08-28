@@ -5,9 +5,10 @@ import SplashScreen from 'react-native-splash-screen';
 import AppNavigator from './src/navigation/AppNavigator';
 import AuthProvider from './src/context/AuthContext';
 
-import './src/i18n';
-import { initRemoteConfig, loadTranslationsFromRC } from './src/i18n/rcLoader';
-import { LangProvider } from './src/i18n/LangProvider';
+import './src/providers/firebase'; 
+import { initRemoteConfig, loadTranslationsFromRC } from './src/providers/firebase/rcLoader';
+import { LangProvider } from './src/providers/firebase/LangProvider';
+
 
 import messaging from '@react-native-firebase/messaging';
 import notifee, { AndroidImportance } from '@notifee/react-native';

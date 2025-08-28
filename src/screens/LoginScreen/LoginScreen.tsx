@@ -6,17 +6,14 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type RootStackParamList = {
   LoginPage: undefined;
   SignUp: undefined;
 };
-
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -24,7 +21,7 @@ const LoginScreen: React.FC = () => {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require('../../../assets/LOGO.png')}/>
+        source={require('../../assets/LOGO.png')}/>
         
       <Text style={styles.cinemax}>
         Enter your registered{'\n'}

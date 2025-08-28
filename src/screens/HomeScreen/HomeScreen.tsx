@@ -20,7 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TMDB_API_KEY } from '@env';
 
-const avatar: ImageSourcePropType = require('../../../assets/AvatarHome.png');
+const avatar: ImageSourcePropType = require('../../assets/AvatarHome.png');
 
 type Movie = {
   id: number;
