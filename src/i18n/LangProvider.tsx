@@ -18,7 +18,6 @@ const LangProviderImpl: React.FC<{ children: React.ReactNode }> = ({ children })
   const initial = (i18n.language?.slice(0, 2) as SupportedLang) || 'en';
   const [lang, setLangState] = useState<SupportedLang>(initial);
 
-  // i18n dil değişince state'i güncel tut
   useEffect(() => {
     const onChanged = (lng: string) => {
       const short = (lng?.slice(0, 2) as SupportedLang) || 'en';
@@ -28,7 +27,6 @@ const LangProviderImpl: React.FC<{ children: React.ReactNode }> = ({ children })
     return () => i18n.off('languageChanged', onChanged);
   }, []);
 
-  // Kaydedilmiş dil varsa açılışta onu yükle
   useEffect(() => {
     (async () => {
       const saved = (await AsyncStorage.getItem(STORAGE_KEY)) as SupportedLang | null;
@@ -40,7 +38,6 @@ const LangProviderImpl: React.FC<{ children: React.ReactNode }> = ({ children })
   }, []);
 
   const setLang = (l: SupportedLang) => {
-    // RC'den dil paketini yüklemeyi dene (başarısızsa local fallback zaten var)
     loadLanguageBundle(l);
     i18n.changeLanguage(l);
     AsyncStorage.setItem(STORAGE_KEY, l).catch(() => {});

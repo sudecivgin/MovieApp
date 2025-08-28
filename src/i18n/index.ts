@@ -1,12 +1,15 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as RNLocalize from 'react-native-localize';
+import * as RNLocalize from 'react-native-localize'; 
 
 import en from '../locales/en.flat.json';
 import tr from '../locales/tr.flat.json';
 import es from '../locales/es.flat.json';
 
 type SupportedLang = 'en' | 'tr' | 'es';
+
+
+// Telefonun sistem dilinin tespiti burada 
 
 function detectLang(): SupportedLang {
   const locales = RNLocalize?.getLocales?.() ?? [];
@@ -24,6 +27,8 @@ function detectLang(): SupportedLang {
   }
   return 'en'; 
 }
+
+//detectLang() cihazın dili bulur.
 
 const lng: SupportedLang = detectLang();
 

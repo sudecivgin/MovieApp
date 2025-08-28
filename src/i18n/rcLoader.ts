@@ -12,17 +12,14 @@ const RC_KEYS = {
 type SupportedLang = keyof typeof RC_KEYS;
 const SUPPORTED: SupportedLang[] = ['en', 'tr', 'es'];
 
-/** findBestAvailableLanguage yerine getLocales ile tespit */
 function detectLang(): SupportedLang {
   try {
     const locales = RNLocalize.getLocales?.() ?? [];
-    // Örn: [{ languageCode: 'tr', countryCode: 'TR', languageTag: 'tr-TR', ...}]
     for (const loc of locales) {
       const code = (loc.languageCode || '').toLowerCase();
       if (SUPPORTED.includes(code as SupportedLang)) {
         return code as SupportedLang;
       }
-      // Yedek: languageTag üzerinden bak
       const tag = (loc.languageTag || '').toLowerCase();
       if (tag.startsWith('tr')) return 'tr';
       if (tag.startsWith('es')) return 'es';
@@ -45,11 +42,7 @@ export const initRemoteConfig = async () => {
   }
 };
 
-/**
- * RC'den aktif dil paketini yükler.
- * - preferred verilirse onu kullanır; verilmezse cihaz dilini detectLang() ile seçer.
- * - RC JSON geçerliyse i18n bundle'ını günceller ve dili değiştirir.
- */
+
 export const loadTranslationsFromRC = async (preferred?: SupportedLang) => {
   const lang: SupportedLang =
     (preferred && SUPPORTED.includes(preferred) ? preferred : detectLang());
@@ -60,7 +53,7 @@ export const loadTranslationsFromRC = async (preferred?: SupportedLang) => {
 
   try {
     const parsed = JSON.parse(raw);
-    // mevcutları override et + deep merge
+
     i18n.addResourceBundle(lang, 'translation', parsed, true, true);
     i18n.changeLanguage(lang);
   } catch (err) {
