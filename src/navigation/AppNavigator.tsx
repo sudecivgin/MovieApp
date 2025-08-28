@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Onboarding from '../components/Onboarding';
 
@@ -25,9 +26,8 @@ import { RootStackParamList } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// 🔐 Giriş/kimlik ekranları (ilk ekran LoginPage)
-const AuthStack = () => (
-  <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false }}>
+const AuthStack = ({ initialRoute }: { initialRoute: keyof RootStackParamList }) => (
+  <Stack.Navigator initialRouteName={initialRoute} screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Onboarding" component={Onboarding} />
     <Stack.Screen name="LoginScreen" component={LoginScreen} />
     <Stack.Screen name="LoginPage" component={LoginPage} />
@@ -38,15 +38,11 @@ const AuthStack = () => (
   </Stack.Navigator>
 );
 
-// 📱 Uygulama içi ekranlar
 const AppStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="MainApp" component={BottomTabs} />
-    {/* (İstersen LoginScreen’i buradan kaldırabilirsin; AuthStack’te zaten var) */}
     <Stack.Screen name="LoginScreen" component={LoginScreen} />
-
     <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
-
     <Stack.Screen
       name="EditProfile"
       component={EditProfileScreen}
@@ -58,13 +54,10 @@ const AppStack = () => (
         headerTitleStyle: { fontFamily: 'serif' },
       }}
     />
-
     <Stack.Screen name="Policies" component={Policies} />
     <Stack.Screen name="Help" component={Help} />
-
     <Stack.Screen name="MovieDetailScreen" component={MovieDetailScreen} />
     <Stack.Screen name="Vip" component={VipScreen} />
-
     <Stack.Screen
       name="WatchLater"
       component={WatchLater}
@@ -82,9 +75,33 @@ const AppStack = () => (
 const AppNavigator: React.FC = () => {
   const { isAuthenticated } = useContext(AuthContext)!;
 
+
+  const [bootReady, setBootReady] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const seen = await AsyncStorage.getItem('hasSeenOnboarding');
+
+        setShowOnboarding(seen !== 'true');
+      } finally {
+        setBootReady(true);
+      }
+    })();
+  }, []);
+
+  if (!bootReady || showOnboarding === null) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
-      {isAuthenticated ? <AppStack /> : <AuthStack />}
+      {isAuthenticated ? (
+        <AppStack />
+      ) : (
+        <AuthStack initialRoute={showOnboarding ? 'Onboarding' : 'LoginPage'} />
+      )}
     </NavigationContainer>
   );
 };

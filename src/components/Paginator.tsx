@@ -8,9 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 
 type PaginatorProps = {
-
   totalPages?: number;
-
   currentPage?: number;
   onNextPress: (event: GestureResponderEvent) => void;
 };

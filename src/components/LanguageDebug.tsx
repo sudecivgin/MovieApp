@@ -1,4 +1,3 @@
-// src/components/LanguageDebug.tsx
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useLang } from '../providers/firebase/LangProvider';
