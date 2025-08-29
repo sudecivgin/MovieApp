@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-  KeyboardAvoidingView,
-  Platform,
-  ImageSourcePropType,
-  ActivityIndicator,
-  Dimensions,
-  Animated,
-} from 'react-native';
+import {  View,Text,StyleSheet , Image,ScrollView,TextInput,TouchableOpacity,  FlatList, KeyboardAvoidingView,  Platform,  ImageSourcePropType,  ActivityIndicator,  Dimensions,  Animated,} from 'react-native';
 import { RootStackParamList } from '../../navigation/types';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TMDB_API_KEY } from '@env';
+import { useTranslation } from 'react-i18next'; 
 
 const avatar: ImageSourcePropType = require('../../assets/AvatarHome.png');
 
@@ -33,7 +19,6 @@ type Movie = {
 };
 
 type Genre = { id: number | null; name: string };
-
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const OUTER_PADDING = 20;
@@ -52,6 +37,7 @@ const capWords = (s: string) =>
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const { t, i18n } = useTranslation(); // 👈
 
   const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
@@ -61,7 +47,6 @@ const HomeScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
-
   const getGenreName = (ids?: number[]) => {
     if (!ids || !ids.length) return '';
     const g = genres.find(x => x.id === ids[0]);
@@ -82,6 +67,7 @@ const HomeScreen: React.FC = () => {
         const genresResponse = await fetch(
           `https://api.themoviedb.org/3/genre/movie/list?api_key=${TMDB_API_KEY}&language=en-US`
         );
+
         const genresData = await genresResponse.json();
         const allGenres: Genre[] = [
           { id: null, name: 'All' },
@@ -93,6 +79,7 @@ const HomeScreen: React.FC = () => {
         const popularResponse = await fetch(
           `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`
         );
+
         const popularData = await popularResponse.json();
         setFilteredMovies(popularData.results || []);
       } catch (error) {
@@ -126,49 +113,53 @@ const HomeScreen: React.FC = () => {
     fetchMoviesByCategory();
   }, [selectedCategory]);
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
-          searchQuery
-        )}`
-      );
-      const data = await res.json();
-      setFilteredMovies(data.results || []);
-    } catch (error) {
-      console.error('Search error:', error);
-    } finally {
-      setLoading(false);
-    }
+  const setLang = (lng: 'en' | 'tr') => {
+    i18n.changeLanguage(lng);
   };
 
   const renderHeader = () => (
     <View>
+      <View style={styles.langSwitch}>
+        <TouchableOpacity
+          onPress={() => setLang('en')}
+          style={[styles.langBtn, i18n.language.startsWith('en') && styles.langBtnActive]}>
+
+          <Text style={[styles.langBtnText, i18n.language.startsWith('en') && styles.langBtnTextActive]}>
+            EN
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setLang('tr')}
+          style={[styles.langBtn, i18n.language.startsWith('tr') && styles.langBtnActive]}>
+
+          <Text style={[styles.langBtnText, i18n.language.startsWith('tr') && styles.langBtnTextActive]}>
+            TR
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.header}>
         <Image source={avatar} style={styles.avatar} />
         <View style={styles.textContainer}>
-          <Text style={styles.helloText}>Hello!</Text>
-          <Text style={styles.subtitle}>Let’s stream your favorite movie</Text>
+          <Text style={styles.helloText}>{t('HELLO')}</Text>
+          <Text style={styles.subtitle}>{t('LET_S_STREAM_YOUR_FAVORITE_MOVIE')}</Text>
+       
         </View>
       </View>
 
       <View style={styles.searchContainer}>
         <TextInput
-          placeholder="Search a title..."
+          placeholder={t('SEARCH_A_TITLE')}
           placeholderTextColor="#aaa"
           style={styles.searchInput}
           value={searchQuery}
           onChangeText={setSearchQuery}
           onSubmitEditing={handleSearch}
-          returnKeyType="search"
-        />
+          returnKeyType="search"/>
+
       </View>
 
-      {/* NOW PLAYING ekranı */}
-
-      <Animated.FlatList
+   <Animated.FlatList
         data={nowPlaying}
         keyExtractor={(it) => String(it.id)}
         horizontal
@@ -181,7 +172,7 @@ const HomeScreen: React.FC = () => {
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: scrollX } } }],
           { useNativeDriver: true }
-        )}
+       )}
         renderItem={({ item, index }) => {
           const inputRange = [
             (index - 1) * ITEM_WIDTH,
@@ -189,32 +180,32 @@ const HomeScreen: React.FC = () => {
             (index + 1) * ITEM_WIDTH,
           ];
 
-          const scale = scrollX.interpolate({
+    const scale = scrollX.interpolate({
             inputRange,
             outputRange: [0.9, 1, 0.9],
             extrapolate: 'clamp',
           });
 
-          const translateY = scrollX.interpolate({
+       const translateY = scrollX.interpolate({
             inputRange,
             outputRange: [6, -6, 6],
             extrapolate: 'clamp',
           });
 
-          const opacity = scrollX.interpolate({
-            inputRange,
+      const opacity = scrollX.interpolate({
+        inputRange,
             outputRange: [0.9, 1, 0.9],
             extrapolate: 'clamp',
           });
 
           return (
             <View style={{ width: ITEM_WIDTH }}>
-              <Animated.View
+            <Animated.View
                 style={[
                   styles.featuredCard,
                   { transform: [{ scale }, { translateY }], opacity },
                 ]}>
-                <TouchableOpacity
+            <TouchableOpacity
                   activeOpacity={0.9}
                   onPress={() => navigation.navigate('MovieDetailScreen', { movieId: item.id })}
                   style={{ flex: 1 }}>
@@ -235,24 +226,24 @@ const HomeScreen: React.FC = () => {
                     )}
                   </View>
                 </TouchableOpacity>
-              </Animated.View>
+            </Animated.View>
             </View>
           );
-        }}
-      />
+        }}/>
 
-      <Text style={styles.category}>Category</Text>
+  <Text style={styles.category}>{t('CATEGORY')}</Text>
       {loading ? (
-        <ActivityIndicator size="small" color="#00bcd4" />
+      <ActivityIndicator size="small" color="#00bcd4" />
       ) : (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
+
+       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
           {genres.map((genre, index) => (
             <TouchableOpacity
               key={index}
               style={[styles.categoryButton, selectedCategory === genre.id && { backgroundColor: '#00bcd4' }]}
               onPress={() => setSelectedCategory(genre.id)}>
               <Text style={styles.categoryText}>{genre.name}</Text>
-            </TouchableOpacity>
+           </TouchableOpacity>
           ))}
         </ScrollView>
       )}
@@ -265,12 +256,31 @@ const HomeScreen: React.FC = () => {
             ? 'Most Popular'
             : `${capWords(genres.find(g => g.id === selectedCategory)?.name || '')} Movies`}
         </Text>
-      </View>
+    </View>
     </View>
   );
 
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) return;
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
+          searchQuery
+        )}`
+      );
+      const data = await res.json();
+      setFilteredMovies(data.results || []);
+    } catch (error) {
+      console.error('Search error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <KeyboardAvoidingView
+
+   <KeyboardAvoidingView
       style={{ flex: 1, backgroundColor: '#000' }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView
@@ -281,25 +291,25 @@ const HomeScreen: React.FC = () => {
         {renderHeader()}
 
         {filteredMovies.length === 0 ? (
-          <Text style={styles.noMoviesText}>No movies found in this category.</Text>
+          <Text style={styles.noMoviesText}>{t('NO_MOVIES_FOUND_IN_THIS_CATEGORY')}</Text>
         ) : (
-   <FlatList
+        <FlatList
             data={filteredMovies}
             horizontal
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item, index }) => (
-         <TouchableOpacity
+       <TouchableOpacity
                 activeOpacity={0.9}
                 onPress={() => navigation.navigate('MovieDetailScreen', { movieId: item.id })}
                 style={[styles.card, index === 0 && { marginLeft: 0 }]}>
 
-            <View style={styles.posterWrap}>
+             <View style={styles.posterWrap}>
                   <Image
                     source={{
                       uri: item.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
                         : `https://placehold.co/300x450?text=${encodeURIComponent(item.title)}`,
-          }}
+                    }}
                     style={styles.poster}/>
 
                   {!!item.vote_average && (
@@ -309,9 +319,10 @@ const HomeScreen: React.FC = () => {
                     </View>
                   )}
                 </View>
-          <Text style={styles.cardTitle} numberOfLines={1}>
+                <Text style={styles.cardTitle} numberOfLines={1}>
                   {item.title}
                 </Text>
+
                 <Text style={styles.cardMeta} numberOfLines={1}>
                   {capWords(getGenreName(item.genre_ids))}
                 </Text>
@@ -326,6 +337,38 @@ const HomeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+
+  langSwitch: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    gap: 8,
+    marginTop: 40,
+  },
+
+  langBtn: {
+
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    backgroundColor: '#2b2b2b',
+    borderWidth: 1,
+    borderColor: '#3a3a3a',
+  },
+
+  langBtnActive: {
+    backgroundColor: '#00bcd4',
+    borderColor: '#00bcd4',
+  },
+
+  langBtnText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontFamily: 'serif',
+  },
+  langBtnTextActive: {
+    color: '#000',
+  },
+
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -344,8 +387,9 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 70,
+    marginTop: 12,
   },
+
   avatar: {
     width: 48,
     height: 48,
@@ -393,21 +437,22 @@ const styles = StyleSheet.create({
   },
 
   featuredCard: {
+    
     height: 180,
     borderRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#1e1e1e',
-    ...Platform.select({
-      ios: {
+  ...Platform.select({
+     ios: {
+
         shadowColor: '#000',
-        shadowOpacity: 0.25,
+      shadowOpacity: 0.25,
         shadowRadius: 12,
         shadowOffset: { width: 0, height: 8 },
       },
       android: { elevation: 8 },
     }),
   },
-
   featuredImage: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
@@ -432,6 +477,7 @@ const styles = StyleSheet.create({
     fontFamily: 'serif',
   },
 
+
   featuredReleaseDate: {
     color: '#ccc',
     fontSize: 13,
@@ -449,6 +495,7 @@ const styles = StyleSheet.create({
   },
 
   categoryContainer: {
+
     marginBottom: 20,
   },
 
@@ -463,8 +510,8 @@ const styles = StyleSheet.create({
     minWidth: 100,
   },
 
-
   categoryText: {
+
     color: 'white',
     fontSize: 14,
     fontFamily: 'serif',
@@ -484,7 +531,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 20,
   },
-
   card: {
     width: 160,
     backgroundColor: '#1b1c21ff',
@@ -500,16 +546,18 @@ const styles = StyleSheet.create({
       },
       android: { elevation: 6 },
     }),
+
   },
 
-
   posterWrap: {
+
     borderRadius: 14,
     overflow: 'hidden',
     position: 'relative',
   },
 
   poster: {
+
     width: '100%',
     height: 210,
   },
@@ -527,16 +575,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  badgeStar: {
-     color: '#fff',
-     fontSize: 12, 
-     marginRight: 4 
-    },
-  badgeText: {
-     color: '#fff',
-      fontSize: 12, 
-      fontWeight: '700'
-     },
+  badgeStar: { color: '#fff', fontSize: 12, marginRight: 4 },
+  badgeText: { color: '#fff', fontSize: 12, fontWeight: '700' },
   cardTitle: {
     color: '#fff',
     fontSize: 14,
@@ -544,12 +584,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: 'serif',
   },
+
   cardMeta: {
     color: '#9aa3b2',
     fontSize: 12,
     marginTop: 2,
     fontFamily: 'serif',
   },
+
 });
 
 export default HomeScreen;

@@ -11,9 +11,7 @@ import SignUpScreen from '../screens/SignupScreen/SignUpScreen';
 import ResetPasswordScreen from '../screens/PasswordScreen/ResetPasswordScreen';
 import VerificationScreen from '../screens/PasswordScreen/VerificationScreen';
 import CreatePassword from '../screens/PasswordScreen/CreatePassword';
-
 import BottomTabs from './BottomTabs';
-
 import EditProfileScreen from '../screens/ProfileMore/EditProfileScreen';
 import Policies from '../screens/ProfileMore/Policies';
 import Help from '../screens/ProfileMore/Help';
@@ -41,8 +39,7 @@ const AuthStack = ({ initialRoute }: { initialRoute: keyof RootStackParamList })
 const AppStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="MainApp" component={BottomTabs} />
-    <Stack.Screen name="LoginScreen" component={LoginScreen} />
-    <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+
     <Stack.Screen
       name="EditProfile"
       component={EditProfileScreen}
@@ -67,23 +64,22 @@ const AppStack = () => (
         headerStyle: { backgroundColor: '#181818' },
         headerTintColor: 'white',
         headerTitleStyle: { fontFamily: 'serif' },
-      }}
-    />
+      }}/>
+
   </Stack.Navigator>
 );
 
 const AppNavigator: React.FC = () => {
   const { isAuthenticated } = useContext(AuthContext)!;
 
-
   const [bootReady, setBootReady] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
+  const [forceOnboarding, setForceOnboarding] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         const seen = await AsyncStorage.getItem('hasSeenOnboarding');
-
         setShowOnboarding(seen !== 'true');
       } finally {
         setBootReady(true);
@@ -91,17 +87,24 @@ const AppNavigator: React.FC = () => {
     })();
   }, []);
 
-  if (!bootReady || showOnboarding === null) {
-    return null;
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setForceOnboarding(true);
+    } else {
+      setForceOnboarding(false);
+    }
+
+  }, [isAuthenticated]);
+
+  if (!bootReady || showOnboarding === null) return null;
+
+  const initialAuthRoute: keyof RootStackParamList =
+    forceOnboarding ? 'Onboarding' : (showOnboarding ? 'Onboarding' : 'LoginPage');
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? (
-        <AppStack />
-      ) : (
-        <AuthStack initialRoute={showOnboarding ? 'Onboarding' : 'LoginPage'} />
-      )}
+      {isAuthenticated ? <AppStack /> : <AuthStack initialRoute={initialAuthRoute} />}
+      
     </NavigationContainer>
   );
 };
