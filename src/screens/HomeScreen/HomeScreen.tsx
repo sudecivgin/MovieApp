@@ -124,18 +124,9 @@ const HomeScreen: React.FC = () => {
           onPress={() => setLang('en')}
           style={[styles.langBtn, i18n.language.startsWith('en') && styles.langBtnActive]}>
 
-          <Text style={[styles.langBtnText, i18n.language.startsWith('en') && styles.langBtnTextActive]}>
-            EN
-          </Text>
+  
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setLang('tr')}
-          style={[styles.langBtn, i18n.language.startsWith('tr') && styles.langBtnActive]}>
 
-          <Text style={[styles.langBtnText, i18n.language.startsWith('tr') && styles.langBtnTextActive]}>
-            TR
-          </Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.header}>
@@ -200,12 +191,12 @@ const HomeScreen: React.FC = () => {
 
           return (
             <View style={{ width: ITEM_WIDTH }}>
-            <Animated.View
+       <Animated.View
                 style={[
                   styles.featuredCard,
                   { transform: [{ scale }, { translateY }], opacity },
-                ]}>
-            <TouchableOpacity
+              ]}>
+   <TouchableOpacity
                   activeOpacity={0.9}
                   onPress={() => navigation.navigate('MovieDetailScreen', { movieId: item.id })}
                   style={{ flex: 1 }}>
@@ -213,9 +204,9 @@ const HomeScreen: React.FC = () => {
                     source={{
                       uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}`,
                     }}
-                    style={styles.featuredImage}
-                  />
+                    style={styles.featuredImage}/>
                   <View style={styles.featuredOverlay}>
+
                     <Text style={styles.featuredTitle} numberOfLines={1}>
                       {item.title}
                     </Text>
@@ -233,11 +224,11 @@ const HomeScreen: React.FC = () => {
 
   <Text style={styles.category}>{t('CATEGORY')}</Text>
       {loading ? (
-      <ActivityIndicator size="small" color="#00bcd4" />
+  <ActivityIndicator size="small" color="#00bcd4" />
       ) : (
 
-       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
-          {genres.map((genre, index) => (
+   <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryContainer}>
+        {genres.map((genre, index) => (
             <TouchableOpacity
               key={index}
               style={[styles.categoryButton, selectedCategory === genre.id && { backgroundColor: '#00bcd4' }]}
@@ -248,7 +239,7 @@ const HomeScreen: React.FC = () => {
         </ScrollView>
       )}
 
-      <View style={styles.sectionHeader}>
+   <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>
           {selectedCategory === null
             ? 'All Movies'

@@ -11,35 +11,40 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
 import { RootStackParamList } from '../../navigation/types';
 import { AuthContext } from '../../context/AuthContext';
 
 const ProfileScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { logout } = useContext(AuthContext)!;
-
+  const { t } = useTranslation(); 
   const handleLogout = () => {
-    Alert.alert('Log Out', 'Are you sure you want to log out?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Log Out',
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            await logout();
-          } catch (error: any) {
-            Alert.alert('Error', error.message);
-          }
+    Alert.alert(
+      t('LOG_OUT'),
+      t('ARE_YOU_SURE_LOG_OUT', { defaultValue: 'Are you sure you want to log out?' }),
+      [
+     { text: t('GO_BACK'), style: 'cancel' },
+    {
+          text: t('LOG_OUT'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await logout();
+         } catch (error: any) {
+              Alert.alert(t('ERROR', { defaultValue: 'Error' }), error.message);
+            }
+          },
         },
-      },
-    ]);
+      ],
+    );
   };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.profileHeader}>
-<Image source={require('../../assets/AvatarHome.png')} style={styles.avatar} />
+        <Image source={require('../../assets/AvatarHome.png')} style={styles.avatar} />
         <View style={styles.userInfo}>
-
           <Text style={styles.name}>Sude</Text>
           <Text style={styles.email}>Sude04@gmail.com</Text>
         </View>
@@ -48,52 +53,36 @@ const ProfileScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Premium Kısmı*/}
+      <TouchableOpacity style={styles.premiumBox} onPress={() => navigation.navigate('Vip')}>
+        <Icon name="crown" size={24} color="#fff" />
+        <View style={{ marginLeft: 10 }}>
+          <Text style={styles.premiumText}>{t('PREMIUM_MEMBER')}</Text>
+          <Text style={styles.premiumSubText}>{t('NEW_MOVIES_ARE_COMING_FOR_YOU')}</Text>
+        </View>
+      </TouchableOpacity>
 
-    <TouchableOpacity
-  style={styles.premiumBox}
-  onPress={() => navigation.navigate('Vip')}
->
-  <Icon name="crown" size={24} color="#fff" />
-  <View style={{ marginLeft: 10 }}>
-    <Text style={styles.premiumText}>Premium Member</Text>
-    <Text style={styles.premiumSubText}>
-      New movies are coming for you, Download Now!
-    </Text>
-  </View>
-</TouchableOpacity>
+      <Text style={styles.sectionHeader}>{t('ACCOUNT')}</Text>
+      <OptionItem
+        icon="lock-outline"
+        label={t('CHANGE_PASSWORD')}
+        onPress={() => navigation.navigate('ResetPassword')}/>
 
+      <Text style={styles.sectionHeader}>{t('GENERAL')}</Text>
+      <OptionItem icon="bell-outline" label={t('NOTIFICATION')} />
 
-      {/* Account kısmı*/}
-
-      <Text style={styles.sectionHeader}>Account</Text>
-
-<OptionItem
-  icon="lock-outline"
-  label="Change Password"
-  onPress={() => navigation.navigate('ResetPassword')}/>
-
-      {/* General  */}
-      <Text style={styles.sectionHeader}>General</Text>
-      <OptionItem icon="bell-outline" label="Notification" />
-
-      {/* More  */}
-      <Text style={styles.sectionHeader}>More</Text>
+      <Text style={styles.sectionHeader}>{t('MORE')}</Text>
       <OptionItem
         icon="file-document-outline"
-        label="Legal and Policies"
+        label={t('LEGAL_AND_POLICIES')}
         onPress={() => navigation.navigate('Policies')}/>
+      <OptionItem
+        icon="message-question-outline"
+        label={t('HELP_FEEDBACK')}
+        onPress={() => navigation.navigate('Help')}/>
+      <OptionItem icon="information-outline" label={t('ABOUT_US')} />
 
-<OptionItem
-  icon="message-question-outline"
-  label="Help & Feedback"
-  onPress={() => navigation.navigate('Help')}/>
-
-      <OptionItem icon="information-outline" label="About Us" />
-
-      {/* Logout */}
       <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-        <Text style={styles.logoutText}>Log Out</Text>
+        <Text style={styles.logoutText}>{t('LOG_OUT')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -104,20 +93,16 @@ const OptionItem = ({
   label,
   onPress,
 }: {
-
   icon: string;
   label: string;
   onPress?: () => void;
-
 }) => (
-
   <TouchableOpacity style={styles.optionRow} onPress={onPress}>
     <Icon name={icon} size={22} color="#fff" style={{ width: 30 }} />
     <Text style={styles.optionText}>{label}</Text>
     <Icon name="chevron-right" size={18} color="#888" style={{ marginLeft: 'auto' }} />
   </TouchableOpacity>
 );
-
 
 export default ProfileScreen;
 
@@ -131,29 +116,24 @@ const styles = StyleSheet.create({
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 70,
+    marginTop: 100,
     marginBottom: 20,
   },
-  
+
   avatar: {
     width: 56,
     height: 56,
     borderRadius: 28,
     marginRight: 12,
   },
-
-  userInfo: {
-    flex: 1,
-  },
-
+  
+  userInfo: { flex: 1 },
   name: {
-
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
     fontFamily: 'serif',
   },
-
   email: {
     color: '#ccc',
     fontSize: 14,
@@ -161,32 +141,29 @@ const styles = StyleSheet.create({
   },
 
   premiumBox: {
-    backgroundColor: '#b2600eff',
+    backgroundColor: '#b2600e',
     borderRadius: 12,
     flexDirection: 'row',
     padding: 16,
     alignItems: 'center',
     marginBottom: 30,
-    marginTop: 30,
+    marginTop: 10,
   },
-
-
-
   premiumText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 15,
     fontFamily: 'serif',
   },
-
   premiumSubText: {
     color: '#fff',
     fontSize: 12,
     marginTop: 4,
-      fontFamily: 'serif',
+    fontFamily: 'serif',
   },
+
   sectionHeader: {
-    color: '#9e9b9bff',
+    color: '#9e9b9b',
     fontSize: 14,
     fontWeight: '900',
     marginTop: 20,
@@ -198,14 +175,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 14,
     borderBottomColor: '#2b2b2b',
-       borderBottomWidth: 1,
+    borderBottomWidth: 1,
   },
+
   optionText: {
     color: '#fff',
     fontSize: 15,
     marginLeft: 8,
     fontFamily: 'serif',
   },
+
   logoutButton: {
     borderWidth: 1,
     borderColor: '#00bcd4',
@@ -214,11 +193,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 30,
   },
-  
   logoutText: {
     color: '#00bcd4',
     fontWeight: 'bold',
     fontSize: 16,
-          fontFamily: 'serif',
+    fontFamily: 'serif',
   },
 });

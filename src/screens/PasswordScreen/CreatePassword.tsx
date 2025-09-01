@@ -14,16 +14,13 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/types';
 import { Alert } from 'react-native';
 
-
 const CreatePassword: React.FC = () => {
 
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [secureNew, setSecureNew] = useState<boolean>(true);
   const [secureConfirm, setSecureConfirm] = useState<boolean>(true);
-
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
 const handleReset = () => {
   if (!newPassword || !confirmPassword) {
     Alert.alert('Missing Fields', 'Please fill in both fields');
