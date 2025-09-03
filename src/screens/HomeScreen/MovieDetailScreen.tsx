@@ -129,6 +129,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
       const list: Movie[] = json ? JSON.parse(json) : [];
 
       const exists = list.some(m => m.id === movie.id);
+
       if (exists) {
 
         Alert.alert(
@@ -151,9 +152,11 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
         } as Movie,
    ];
       await AsyncStorage.setItem('watchLater', JSON.stringify(updated));
+
       Alert.alert(
         t('ADDED_TITLE', { defaultValue: 'Added' }),
         t('ADDED_TO_WATCH_LATER', { defaultValue: `"${movie.title}" added to Watch Later.` })
+
       );
     } catch {
       Alert.alert(t('ERROR', { defaultValue: 'Error' }), t('UPDATE_WATCH_LATER_FAILED', { defaultValue: 'Failed to update Watch Later.' }));
@@ -207,7 +210,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
         <ActivityIndicator size="large" color="#f5c518" />
         <Text style={styles.loadingText}>{t('LOADING')}</Text>
       </View>
-    );
+        );
   }
 
   if (err || !movie) {
@@ -222,6 +225,7 @@ const MovieDetailScreen: React.FC<Props> = ({ route }) => {
           <Text style={styles.chipText}>{t('GO_BACK')}</Text>
         </TouchableOpacity>
       </View>
+      
     );
   }
 

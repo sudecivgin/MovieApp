@@ -1,0 +1,27 @@
+import ProfileScreen from '../../screens/ProfileMore/ProfileScreen';
+import EditProfileScreen from '../../screens/ProfileMore/EditProfileScreen';
+import Policies from '../../screens/ProfileMore/Policies';
+import Help from '../../screens/ProfileMore/Help';
+import VipScreen from '../../screens/ProfileMore/VipScreen';
+
+export const ProfileStackScreen = {
+  Profile: {
+    screen: ProfileScreen,
+    title: 'Profile',
+    options: { headerShown: false },
+  },
+  EditProfile: {
+    screen: EditProfileScreen,
+    title: 'Edit Profile',
+    options: {
+      headerShown: true,
+      title: 'Edit Profile',
+      headerStyle: { backgroundColor: '#181818' },
+      headerTintColor: '#fff',
+      headerTitleStyle: { fontFamily: 'serif' },
+    },
+  },
+  Policies: { screen: Policies, title: 'Policies', options: { headerShown: true } },
+  Help:     { screen: Help,     title: 'Help',     options: { headerShown: true } },
+  Vip:      { screen: VipScreen,title: 'VIP',      options: { headerShown: true } },
+} as const;

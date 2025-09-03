@@ -14,7 +14,6 @@ import auth from '@react-native-firebase/auth';
 type RootStackParamList = {
   LoginPage: undefined;
 };
-
 const ResetPasswordScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -24,7 +23,6 @@ const ResetPasswordScreen: React.FC = () => {
       Alert.alert('Error', 'Please enter your email.');
       return;
     }
-
     try {
       await auth().sendPasswordResetEmail(email);
       Alert.alert('Success', 'Password reset email sent. Check your inbox.');

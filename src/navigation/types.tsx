@@ -1,19 +1,17 @@
 import { Movie } from './movie';
 export type RootStackParamList = {
-   MainApp: {
-    screen?: string;
-    params?: object;
-  };
+MainApp: { screen?: string; params?: object };
   Onboarding: undefined;
   LoginScreen: undefined;
-  
   LoginPage: undefined;
   SignUp: undefined;
   ResetPassword: undefined;
+    Profile: undefined;
   Verification: undefined;
   CreatePassword: undefined;
-  MovieDetailScreen: { movieId: number };
+MovieDetailScreen: { movieId: number; hideTabBar?: boolean };
   Home: undefined;
+Search: undefined;
   Popular: undefined;
   EditProfile: undefined;  
     Policies: undefined;
@@ -25,6 +23,4 @@ export type RootStackParamList = {
           initialMovies?: Movie[];
     };
     
-
-     
 };
