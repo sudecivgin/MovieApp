@@ -9,7 +9,7 @@ MainApp: { screen?: string; params?: object };
     Profile: undefined;
   Verification: undefined;
   CreatePassword: undefined;
-MovieDetailScreen: { movieId: number; hideTabBar?: boolean };
+  MovieDetail: { movieId: number };
   Home: undefined;
 Search: undefined;
   Popular: undefined;

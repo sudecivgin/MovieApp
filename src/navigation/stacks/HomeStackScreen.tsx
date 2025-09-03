@@ -8,7 +8,7 @@ export const HomeStackScreen = {
     options: {},
     initialParams: {},
   },
-  MovieDetail: {
+  MovieDetailScreen: {  
     screen: MovieDetailScreen,
     title: 'Movie Detail',
     options: {},
